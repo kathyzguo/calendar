@@ -1,0 +1,36 @@
+<form id = "userForm">
+    <label for = "name">Preferred Name:</label>
+    <input type = "text" name = "name" required>
+    <br><br>
+    <label for = "email">Email:</label>
+    <input type = "email" name = "email" required>
+    <br><br>
+    <label for = "password">Password:</label>
+    <input type = "password" name = "password" required>
+    <br><br>
+    <button>Submit</button>
+</form>
+
+<script>
+    const base = "http://localhost:3000/api";
+    document.getElementById("userForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formObj = new FormData(e.target);
+        try {
+            console.log(`${base}/login/create`);
+            const response = await fetch(`${base}/login/create`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(Object.fromEntries(formObj))
+            })
+            const result = await response.json();
+            if (response.ok) {
+                console.log(result);
+                window.location.href = "index.html"
+            }
+        }
+        catch (err) {
+            alert("Network error:", err.message);
+        }
+    })
+</script>
