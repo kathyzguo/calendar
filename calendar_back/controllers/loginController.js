@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const {Pool} = require("pg");
-require("dotenv").config();
 
 async function checkUsers(em, pw) {
     const pool = new Pool({
@@ -37,7 +36,7 @@ async function addUser(nm, em, pw) {
             return {status: true, id: user.id, message: "User Successfully Registered"}
         }
         else {
-            return {message: "Email Already Registered"}
+            return {status: false, message: "Email Already Registered"}
         }
     }
     catch (err) {

@@ -49,6 +49,7 @@ const LoginInputs = ({base}: {base: string}) => {
                 const response = await fetch(`${base}/login`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
+                    credentials: "include",
                     body: JSON.stringify(formData)
                 })
                 const results = await response.json();

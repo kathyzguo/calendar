@@ -2,12 +2,10 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const {userAuth} = require("../middlewares/loginMiddleware");
 const {addUser, checkUsers} = require("../controllers/loginController");
 
 router.use(express.json());
 router.use(cookieParser());
-router.use(userAuth);
 
 router.post("/", async (req, res) => {
     const {email, password, stay} = req.body;
@@ -20,7 +18,7 @@ router.post("/", async (req, res) => {
             const cookieOptions = {
                 httpOnly: true,
                 secure: (process.env.NODE_ENV === "production"),
-                sameSite: "strict",
+                sameSite: (process.env.NODE_ENV === "production" ? "none" : "lax"),
                 ...(stay && {maxAge: 1000 * 60 * 60 * 24 * 30})}
             res.cookie("authToken", jwt_token, cookieOptions);
         }
@@ -34,7 +32,19 @@ router.post("/create", async (req, res) => {
 })
 
 router.get("/authToken", (req, res) => {
-    res.status(401).json({message: "No Token Provided"});
+    const token = req.cookies.authToken;
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_S);
+            res.json({status: true, id: decoded.id, message: "Success"});
+        }
+        catch (error) {
+            res.status(401).json({message: "JSON Token Failure"});
+        }
+    }
+    else {
+        res.status(401).json({message: "No Token Provided"});
+    }
 })
 
 module.exports = router;

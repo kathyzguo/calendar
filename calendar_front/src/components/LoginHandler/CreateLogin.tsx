@@ -1,13 +1,16 @@
-import type {LoginCreate, LoginErrors} from '../../interfaces/LoginInterface.tsx'
+import type {LoginCreate, LoginCreateErrors} from '../../interfaces/LoginInterface.tsx'
 import {useState} from 'react'
 import {Link} from 'react-router-dom'
 
 const CreateLogin = ({base}: {base: string}) => {
-    const [formData, setFormData] = useState<LoginCreate>({email: "", password: ""});
-    const [formErrors, setFormError] = useState<LoginErrors>({});
+    const [formData, setFormData] = useState<LoginCreate>({name: "", email: "", password: ""});
+    const [formErrors, setFormError] = useState<LoginCreateErrors>({});
 
-    const checkLoginB = (email: string, password: string) => {
-        const newErrors: LoginErrors = {};
+    const checkLoginB = (name: string, email: string, password: string) => {
+        const newErrors: LoginCreateErrors = {};
+        if (!name) {
+            newErrors.name = "Enter a name";
+        }
         if (!email) {
             newErrors.email = "Enter an email";
         }
@@ -27,7 +30,7 @@ const CreateLogin = ({base}: {base: string}) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setFormData(prev => ({...prev, [name]: value}))
-        if (formErrors[name as keyof LoginErrors]) {
+        if (formErrors[name as keyof LoginCreateErrors]) {
             console.log(formErrors);
             setFormError(prev => ({...prev, [name]: undefined}));
         }
@@ -35,7 +38,7 @@ const CreateLogin = ({base}: {base: string}) => {
 
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const errors = checkLoginB(formData.email, formData.password);
+        const errors = checkLoginB(formData.name, formData.email, formData.password);
         if (Object.keys(errors).length > 0) {
             console.log(errors);
         }
@@ -46,12 +49,15 @@ const CreateLogin = ({base}: {base: string}) => {
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(formData)
                 })
+                console.log("passed?");
                 const results = await response.json();
                 if (response.ok) {
                     console.log(results);
+                    console.log("YIPPE!");
                 }
             }
             catch (err) {
+                console.log("ERRRO");
                 if (err instanceof Error) alert("Network Error: " + err.message);
             }
         }
@@ -60,6 +66,13 @@ const CreateLogin = ({base}: {base: string}) => {
     return (
     <>
         <form noValidate onSubmit = {handleFormSubmission}>
+            <input
+                type = "name"
+                id = "formName"
+                name = "name"
+                placeholder = "Name"
+                onChange = {handleInputChange}
+            />
             <input
                 type = "email"
                 id = "formEmail"

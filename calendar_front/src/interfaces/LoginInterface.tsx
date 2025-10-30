@@ -5,11 +5,18 @@ export interface LoginData {
 }
 
 export interface LoginCreate {
+    name: string;
     email: string;
     password: string;
 }
 
 export interface LoginErrors {
+    email?: string;
+    password?: string;
+}
+
+export interface LoginCreateErrors {
+    name?: string;
     email?: string;
     password?: string;
 }
