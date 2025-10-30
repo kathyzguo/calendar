@@ -1,8 +1,8 @@
-import type {LoginData, LoginErrors} from "../interfaces/LoginInterface.tsx"
-import {useState} from "react"
+import type {LoginData, LoginErrors} from "../../interfaces/LoginInterface.tsx"
+import {useState, useEffect} from "react"
+import {Link} from 'react-router-dom'
 
-const LoginInputs = () => {
-    const base = "http://localhost:3000/api";
+const LoginInputs = ({base}: {base: string}) => {
     const [formData, setFormData] = useState<LoginData>({email: "", password: "", stay: false});
     const [formErrors, setFormError] = useState<LoginErrors>({});
 
@@ -28,13 +28,16 @@ const LoginInputs = () => {
         const {name, value} = e.target;
         setFormData(prev => ({...prev, [name]: value}))
         if (formErrors[name as keyof LoginErrors]) {
+            console.log(formErrors);
             setFormError(prev => ({...prev, [name]: undefined}));
         }
     }
+
     const handleBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, checked} = e.target;
         setFormData(prev => ({...prev, [name]: checked}));
     }
+
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errors = checkLoginB(formData.email, formData.password);
@@ -54,15 +57,28 @@ const LoginInputs = () => {
                 }
             }
             catch (err) {
-                if (err instanceof Error) {
-                    alert("Network Error: " + err.message);
-                }
-                else {
-                    alert("Network Error: " + String(err));
-                }
+                if (err instanceof Error) alert("Network Error: " + err.message);
             }
         }
     }
+
+    useEffect(() => {
+        async function loadTokens() {
+            try {
+                const response = await fetch(`${base}/login/authToken`, {
+                    credentials: "include"
+                });
+                const results = await response.json();
+                if (response.ok) {
+                    console.log(results);
+                }
+            }
+            catch (err) {
+                if (err instanceof Error) alert("Network Error:" + err.message);
+            }    
+        }
+        loadTokens();
+    }, [])
 
     return (
     <>
@@ -89,6 +105,7 @@ const LoginInputs = () => {
             />
             <button>Submit</button>
         </form>
+        <Link to = "/create">Create Account</Link>
     </>
     );
 }

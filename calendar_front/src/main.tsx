@@ -1,10 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import LoginInputs from './components/LoginInputs.tsx'
+import App from "./components/App.tsx"
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <LoginInputs />
+        <App apiBase = {"http://localhost:3000/api"} />
     </StrictMode>,
 )
