@@ -1,34 +1,25 @@
 import {useEffect, useState} from "react"
 import type {CalendarListed, Event, EventCreateS} from "../../interfaces/CalendarInterface"
-import {editEvent, deleteEvent} from "./CalendarAPI"
+import {makeNewEvent} from "./CalendarAPI"
 
-const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: {event: Event | undefined, base: string, 
+const EditEvent = ({calendar_id, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: {calendar_id: number | undefined, base: string, 
     calendarL: Set<CalendarListed>, setCalendarL: (c: Set<CalendarListed>) => void,
     allCalendarL: Set<CalendarListed>, setAllCalendarL: (c: Set<CalendarListed>) => void}) => {
-    const [showEdit, setShowEdit] = useState(false);
-    const [recurring, setRecurring] = useState(event && event.recurrence !== "NONE");
-    const [allDay, setAllDay] = useState((event) ? event.all_day : false);
+    const [recurring, setRecurring] = useState(false);
+    const [allDay, setAllDay] = useState(false);
     const [errorTime, setErrorTime] = useState("");
     const [errorDate, setErrorDate] = useState("");
     const [errorTogether, setErrorTogether] = useState("");
     const [success, setSuccess] = useState("");
-    const [editedEvent, setEditedEvent] = useState<EventCreateS>(fromEventToS(event));
+    const [editedEvent, setEditedEvent] = useState<EventCreateS>(generate());
     const oddmonths = [1, 3, 5, 8, 10];
 
-    function fromEventToS(eventS: Event | undefined): EventCreateS {
-        if (eventS) {
-            const newEvent: EventCreateS = {event_id: eventS.event_id,
-                calendar_id: eventS.calendar_id, name: eventS.name, description: eventS.description, 
-                start_date: eventS.start_time.toISOString().slice(0, 10),
-                start_time: eventS.start_time.toISOString().slice(11, 16),
-                end_date: (eventS.end_time) ? eventS.end_time.toISOString().slice(0, 10) : "",
-                end_time: (eventS.end_time) ? eventS.end_time.toISOString().slice(11, 16) : "",
-                all_day: eventS.all_day, recurrence: eventS.recurrence,
-                re_date: (eventS.recurrence_end) ? eventS.recurrence_end.toISOString().slice(0, 10) : ""
-            }
-            return newEvent;
-        } else return {event_id: 0, calendar_id: 0, name: "", description: "", start_date: "", start_time: "", end_date: "", end_time: "",
+    function generate(): EventCreateS {
+        if (calendar_id)
+        return {event_id: 0, calendar_id: calendar_id, name: "", description: "", start_date: "", start_time: "", end_date: "", end_time: "",
             all_day: false, recurrence: "NONE", re_date: ""};
+        return {event_id: 0, calendar_id: 0, name: "", description: "", start_date: "", start_time: "", end_date: "", end_time: "",
+            all_day: false, recurrence: "NONE", re_date: ""}
     }
 
     function fromSToEvent(eventCS: EventCreateS): Event {
@@ -66,7 +57,7 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
     }
 
     useEffect(() => {
-        if (event) document.body.style.overflow = "hidden";
+        if (calendar_id) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "unset";
     }, [])
 
@@ -137,7 +128,7 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
 
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (editedEvent && event) {
+        if (editedEvent && calendar_id) {
             if (!editedEvent.name || editedEvent.name === "") {setErrorTogether("Please enter a name"); return}
             if (!editedEvent.description || editedEvent.description === "") {setErrorTogether("Please enter a description"); return}
             if (!editedEvent.start_date) {setErrorTogether("Please enter a start date"); return}
@@ -172,41 +163,24 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
             setErrorDate("");
             setErrorTime("");
             setErrorTogether("");
-            const newCL = await editEvent(fromSToEvent(editedEvent), base, allCalendarL);
-            if (newCL) {
+            const newCL = await makeNewEvent(fromSToEvent(editedEvent), base, allCalendarL);
+            if (typeof newCL !== "string") {
                 setCalendarL(new Set(calendarL));
                 setAllCalendarL(new Set(allCalendarL));
-                setSuccess("Event successfully edited");
+                setSuccess("Event successfully created");
             }
-            else setSuccess("Unable to edit event");
-        }
-    }
-
-    const handleDelete = async (c_id: number, e_id: number, base: string, listCal: Set<CalendarListed>) => {
-        if (event) {
-            const responseString: string = await deleteEvent(c_id, e_id, base, listCal);
-            if (responseString === "Event successfully deleted") {
-                setCalendarL(new Set(calendarL));
-                setAllCalendarL(new Set(allCalendarL));
-            }
-            setSuccess(responseString);
+            else setSuccess(newCL);
         }
     }
 
     return (
-        event &&
+        calendar_id &&
         <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", position: "fixed", top: "0", right: "0", left: "0", bottom: "0",
             zIndex: "4", justifyContent: "center", alignItems: "center", backgroundColor: "#00000097", border: "0"}}>
             <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white", position: "relative",
                 maxHeight: "650px", overflow: "scroll"}}>
-                <h2>Event Info</h2>
-                <h4>{event.name}</h4>
-                <p>{event.description}</p>
-                <br/>
-                <button className = "btn btn-primary" style = {{marginRight: "12px"}} onClick = {() => setShowEdit(true)}>Edit Event</button>
-                <button className = "btn btn-primary" onClick = {() => handleDelete(event.calendar_id, event.event_id, base, allCalendarL)}>Delete Event</button>
+                <h2>Create Event</h2>
                 {success !== "" && <p style = {{color: "#4400FF"}}>{success}</p>}
-                {showEdit && 
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
                     {errorTime !== "" && <p className = "text-danger">{errorTime}</p>}
                     {errorDate !== "" && <p className = "text-danger">{errorDate}</p>}
@@ -287,7 +261,6 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
                     }
                     <button type = "submit" className = "btn btn-primary">Submit</button>
                 </form>
-                }
                 <hr/>
             </div>
         </div>

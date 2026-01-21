@@ -1,9 +1,13 @@
 import type {CalendarListed, Event, EventJSON, CalendarCreate} from "../../interfaces/CalendarInterface"
 import {useRef, useState, useEffect} from "react"
+import {createPortal} from "react-dom"
 import {useNavigate} from 'react-router-dom'
 import Taskbar from "../Home/Taskbar"
-import {loadCalendar, addOrRemoveCalendar, makeNewCalendar, makeNewEvent} from "./CalendarAPI"
+import {loadCalendar, deleteCalendar} from "./CalendarAPI"
 import CalendarComp from "./CalendarComp";
+import CreateEvent from "./CreateEvent";
+import CreateCalendar from "./CreateCalendar";
+import EditCalendar from "./EditCalendar";
 
 const Calendars = ({base, userID} : {base: string, userID: number}) => {
     const navigate = useNavigate();
@@ -11,6 +15,9 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
     const [listOfCalendars, setListOfCalendars] = useState<Set<CalendarListed>>(new Set<CalendarListed>());
     const taskbarDiv = useRef<HTMLDivElement>(null);
     const [heightOfTask, setHeightOfTask] = useState(0);
+    const [showCreateE, setShowCreateE] = useState<number | undefined>(undefined);
+    const [showCreateC, setShowCreateC] = useState<number | undefined>(undefined);
+    const [showEditC, setShowEditC] = useState<CalendarCreate | undefined>(undefined);
 
     useEffect(() => {
         if (userID === -1) {
@@ -36,6 +43,33 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
         }
     }, []);
 
+    const handleCreateSubmission = () => {
+        if (activeCalendars.size === 1) {
+            for (const c of activeCalendars) {
+                setShowCreateE(c.calendar_id);
+            }
+        }
+    }
+
+    const handleEditSubmission = () => {
+        if (activeCalendars.size === 1) {
+            for (const c of activeCalendars) {
+                setShowEditC({calendar_id: c.calendar_id, user_id: userID,
+                    name: c.name, description: c.description, is_default: c.is_default});
+            }
+        }
+    }
+
+    const handleDeleteSubmission = async () => {
+        if (activeCalendars.size >= 1) {
+            for (const c of activeCalendars) {
+                await deleteCalendar(c.calendar_id, base, listOfCalendars, activeCalendars);
+            }
+            setListOfCalendars(new Set(listOfCalendars));
+            setActiveCalendars(new Set(activeCalendars));
+        }
+    }
+
     return (
         <div>
             <div ref = {taskbarDiv}>
@@ -58,9 +92,43 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
                             {c.name}
                         </label>
                     ))}
+                    <div className = "leftNavDiv" style = {{marginTop: "10px"}}>
+                        <button onClick = {() => setShowCreateC(userID)}>Create calendar</button>
+                    </div>
+                    <div className = "leftNavDiv">
+                        <button onClick = {() => handleEditSubmission()}>Edit selected calendar</button>
+                    </div>
+                    <div className = "leftNavDiv">
+                        <button onClick = {() => handleDeleteSubmission()}>Delete selected calendars</button>
+                    </div>
+                    <div className = "leftNavDiv">
+                        <button onClick = {() => handleCreateSubmission()}>Create event on selected calendar</button>
+                    </div>                    
                 </nav>
-                <CalendarComp calendars = {activeCalendars}/>
+                <CalendarComp base = {base} calendars = {activeCalendars} setCalendars = {setActiveCalendars} 
+                allCalendars = {listOfCalendars} setAllCalendars = {setListOfCalendars}/>
             </div>
+            {showCreateE && createPortal(<div>
+                    <CreateEvent calendar_id = {showCreateE} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+                    allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
+                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
+                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
+                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateE(undefined); document.body.style.overflow = "unset"}}>X</button>
+                </div>, document.body)}
+            {showCreateC && createPortal(<div>
+                    <CreateCalendar user_id = {showCreateC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+                    allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
+                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
+                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
+                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateC(undefined); document.body.style.overflow = "unset"}}>X</button>
+                </div>, document.body)}
+            {showEditC && createPortal(<div>
+                    <EditCalendar calendar_info = {showEditC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+                    allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
+                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
+                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
+                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowEditC(undefined); document.body.style.overflow = "unset"}}>X</button>
+                </div>, document.body)}
         </div>
     )
 };

@@ -60,20 +60,8 @@ const getSpecificCalendar = async (calendarID: number, base: string): Promise<Ev
     }  
 } 
 
-const addOrRemoveCalendar = (findID: number, add: boolean, listOfCalendars: Set<CalendarListed>, 
-    activeCalendars: Set<CalendarListed>): Set<CalendarListed> => {
-    for (const c of listOfCalendars) {
-        if (c.calendar_id === findID) {
-            const newActiveCalendars = new Set<CalendarListed>(activeCalendars);
-            (add) ? newActiveCalendars.add(c) : newActiveCalendars.delete(c);
-            return newActiveCalendars;
-        }
-    }
-    return activeCalendars;
-}
-
 const makeNewCalendar = async (calendar_info: CalendarCreate, base: string, 
-    listOfCalendars: Set<CalendarListed>): Promise<Set<CalendarListed> | string> => {
+    listOfCalendars: Set<CalendarListed>): Promise<CalendarListed | string> => {
     try {
         const response = await fetch(`${base}/calendar/createCalendar`, {
             method: "POST",
@@ -83,26 +71,82 @@ const makeNewCalendar = async (calendar_info: CalendarCreate, base: string,
         const results = await response.json();
         if (response.ok) {
             if (results.status) {
-                let calendarItem: CalendarListed = {calendar_id: results.calendar_id, name: calendar_info.name,
+                const calendarItem: CalendarListed = {calendar_id: results.calendar_id, name: calendar_info.name,
                     description: calendar_info.description, is_default: calendar_info.is_default, events: []};
-                const newListOfCalendars = new Set<CalendarListed>(listOfCalendars);
-                newListOfCalendars.add(calendarItem);
-                return newListOfCalendars;
+                listOfCalendars.add(calendarItem);
+                return calendarItem;
             }
             else {
                 return results.message;
             }
         }
-        return listOfCalendars;
+        return "Unable to make calendar"
     }
     catch (err) {
         if (err instanceof Error) alert("Network Error:" + err.message);
-        return listOfCalendars;
+        return "Unable to make calendar"
+    }
+}
+
+const editCalendar = async (calendar_info: CalendarCreate, base: string,
+    listOfCalendars: Set<CalendarListed>, activeCals: Set<CalendarListed>): Promise<CalendarListed | undefined> => {
+    try {
+        const response = await fetch(`${base}/calendar/editCalendar`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(calendar_info)
+        });
+        const results = await response.json();
+        if (response.ok && results.status) {
+            for (const calendar of activeCals) {
+                if (calendar.calendar_id === calendar_info.calendar_id) {
+                    const newCalendar = {...calendar, name: calendar_info.name, description: calendar_info.description};
+                    listOfCalendars.delete(calendar);
+                    listOfCalendars.add(newCalendar);
+                    activeCals.delete(calendar);
+                    activeCals.add(newCalendar);
+                    return calendar;
+                }
+            };
+        }
+        return undefined;
+    }
+    catch (err) {
+        if (err instanceof Error) alert("Network Error:" + err.message);
+        return undefined;
+    }
+}
+
+const deleteCalendar = async (calendar_id: number, base: string,
+    listOfCalendars: Set<CalendarListed>, activeCals: Set<CalendarListed>): Promise<string> => {
+    try {
+        const jsonObj = {calendar_id: calendar_id};
+        const response = await fetch(`${base}/calendar/deleteCalendar`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(jsonObj)
+        });
+        const results = await response.json();
+        if (response.ok && results.status) {
+            for (const calendar of activeCals) {
+                if (calendar.calendar_id === calendar_id) {
+                    listOfCalendars.delete(calendar);
+                    activeCals.delete(calendar);
+                    return "Calendar successfully deleted";
+                }
+            }
+            return "Calendar could not be deleted";
+        }
+        else return "Calendar could not be deleted";
+    }
+    catch (err) {
+        if (err instanceof Error) alert("Network Error:" + err.message);
+        return "Calendar could not be deleted";
     }
 }
 
 const makeNewEvent = async (event_info: Event, base: string, 
-    listOfCalendars: Set<CalendarListed>): Promise<Set<CalendarListed> | string> => {
+    listOfCalendars: Set<CalendarListed>): Promise<CalendarListed | string> => {
     try {
         const response = await fetch(`${base}/calendar/createEvent`, {
             method: "POST",
@@ -112,25 +156,84 @@ const makeNewEvent = async (event_info: Event, base: string,
         const results = await response.json();
         if (response.ok) {
             if (results.status) {
-                const newListOfCalendars = new Set<CalendarListed>(listOfCalendars);
-                newListOfCalendars.forEach(calendar => {
+                for (const calendar of listOfCalendars) {
                     if (calendar.calendar_id === event_info.calendar_id) {
                         event_info.event_id = results.event_id;
                         calendar.events.push(event_info);
+                        return calendar;
                     }
-                });
-                return newListOfCalendars;
+                }
             }
             else {
                 return results.message;
             }
         }
-        return listOfCalendars;
+        return "Unable to make event";
     }
     catch (err) {
         if (err instanceof Error) alert("Network Error:" + err.message);
-        return listOfCalendars;
+        return "Unable to make event";
     }
 }
 
-export {loadCalendar, addOrRemoveCalendar, makeNewCalendar, makeNewEvent};
+const editEvent = async (event_info: Event, base: string,
+    listOfCalendars: Set<CalendarListed>): Promise<CalendarListed | undefined> => {
+    try {
+        const response = await fetch(`${base}/calendar/editEvent`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(event_info)
+        });
+        const results = await response.json();
+        if (response.ok && results.status) {
+            for (const calendar of listOfCalendars) {
+                if (calendar.calendar_id === event_info.calendar_id) {
+                    for (const event of calendar.events) {
+                        if (event.event_id === event_info.event_id) {
+                            calendar.events[calendar.events.indexOf(event)] = event_info;
+                        }
+                    };
+                    return calendar;
+                }
+            };
+        }
+        return undefined;
+    }
+    catch (err) {
+        if (err instanceof Error) alert("Network Error:" + err.message);
+        return undefined;
+    }
+}
+
+const deleteEvent = async (calendar_id: number, event_id: number, base: string,
+    listOfCalendars: Set<CalendarListed>): Promise<string> => {
+    try {
+        const jsonObj = {event_id: event_id};
+        const response = await fetch(`${base}/calendar/deleteEvent`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(jsonObj)
+        });
+        const results = await response.json();
+        if (response.ok && results.status) {
+            for (const calendar of listOfCalendars) {
+                if (calendar.calendar_id === calendar_id) {
+                    for (const event of calendar.events) {
+                        if (event.event_id === event_id) {
+                            calendar.events.splice(calendar.events.indexOf(event), 1);
+                            return "Event successfully deleted";
+                        }
+                    };
+                }
+            }
+            return "Event could not be deleted";
+        }
+        else return "Event could not be deleted";
+    }
+    catch (err) {
+        if (err instanceof Error) alert("Network Error:" + err.message);
+        return "Event could not be deleted";
+    }
+}
+
+export {loadCalendar, makeNewCalendar, editCalendar, deleteCalendar, makeNewEvent, editEvent, deleteEvent};

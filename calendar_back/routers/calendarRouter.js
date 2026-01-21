@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getCalendars, getCalendar, createCalendar, createEvent} = require("../controllers/calendarController");
+const {getCalendars, getCalendar, createCalendar, editCalendar, deleteCalendar, createEvent, editEvent, deleteEvent} = require("../controllers/calendarController");
 
 router.use(express.json());
 
@@ -22,12 +22,38 @@ router.post("/createCalendar", async (req, res) => {
     res.json(calendarCreate);
 });
 
+router.post("/editCalendar", async (req, res) => {
+    const {calendar_id, name, description} = req.body;
+    const calendarEdit = await editCalendar(calendar_id, name, description);
+    res.json(calendarEdit);
+});
+
+router.post("/deleteCalendar", async (req, res) => {
+    const {calendar_id} = req.body;
+    const calendarDelete = await deleteCalendar(calendar_id);
+    res.json(calendarDelete);
+});
+
 router.post("/createEvent", async (req, res) => {
     const {calendar_id, name, description, start_time, end_time, all_day, recurrence, 
         recurrence_start, recurrence_end} = req.body;
     const eventCreate = await createEvent(calendar_id, name, description, start_time, end_time, all_day, 
         recurrence, recurrence_start, recurrence_end);
     res.json(eventCreate);
+});
+
+router.post("/editEvent", async (req, res) => {
+    const {event_id, calendar_id, name, description, start_time, end_time, all_day, recurrence, 
+        recurrence_start, recurrence_end} = req.body;
+    const eventEdit = await editEvent(event_id, calendar_id, name, description, start_time, end_time, all_day, 
+        recurrence, recurrence_start, recurrence_end);
+    res.json(eventEdit);
+});
+
+router.post("/deleteEvent", async (req, res) => {
+    const {event_id} = req.body;
+    const eventDelete = await deleteEvent(event_id);
+    res.json(eventDelete);
 });
 
 module.exports = router;

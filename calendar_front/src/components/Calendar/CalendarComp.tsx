@@ -1,8 +1,10 @@
 import {useState} from "react"
+import {createPortal} from "react-dom"
 import type {CalendarListed, Event} from "../../interfaces/CalendarInterface"
 import EditEvent from "./EditEvent"
 
-const CalendarComp = ({calendars}: {calendars: Set<CalendarListed>}) => {
+const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalendars}: {base: string, calendars: Set<CalendarListed>, 
+    setCalendars: (c: Set<CalendarListed>) => void, allCalendars: Set<CalendarListed>, setAllCalendars: (c: Set<CalendarListed>) => void}) => {
     const [currentMonth, setCurrentMonth] = useState(0);
     const [eventClicked, setEventClicked] = useState<Event | undefined>(undefined);
 
@@ -35,15 +37,48 @@ const CalendarComp = ({calendars}: {calendars: Set<CalendarListed>}) => {
         for (const c of calendars) {
             for (const event of c.events) {
                 if (month === event.start_time.getMonth()) activeEvents.push(event);
+                else if (month > event.start_time.getMonth()) {
+                    if (event.recurrence_end && event.recurrence_end.getMonth() >= month) {
+                        activeEvents.push(event);
+                    }
+                }
             }
         }
         return activeEvents;
     }
 
-    function determineDayWEvent(day: number, events: Event[]): Event[] {
+    function determineDayWEvent(day: number, month: number, dayOfWeek: number, events: Event[]): Event[] {
         const listOfEvents: Event[] = [];
         for (const event of events) {
-            if (event.start_time.getDay() === day) listOfEvents.push(event);
+            if (event.start_time.getDate() === day && event.recurrence === "NONE") {
+                listOfEvents.push(event);
+            }
+            if (event.recurrence_start && event.recurrence_end) {
+                if (event.recurrence === "DAILY") {
+                    if (event.recurrence_start.getMonth() === event.recurrence_end.getMonth() && 
+                    event.recurrence_start.getDate() <= day && event.recurrence_end.getDate() >= day) listOfEvents.push(event);
+                    else if (event.recurrence_start.getMonth() === month && event.recurrence_start.getDate() <= day)
+                    listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() === month && event.recurrence_end.getDate() >= day)
+                    listOfEvents.push(event);
+                    else listOfEvents.push(event);
+                }
+                else if (event.recurrence === "WEEKLY") {
+                    if (event.recurrence_start.getMonth() === event.recurrence_end.getMonth() && 
+                    event.recurrence_start.getDate() <= day && event.recurrence_end.getDate() >= day &&
+                    event.recurrence_start.getDate() % 7 === day % 7) listOfEvents.push(event);
+                    else if (event.recurrence_start.getMonth() === month && event.recurrence_start.getDate() <= day
+                    && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() === month && event.recurrence_end.getDate() >= day
+                    && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    else if (event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                }
+                else if (event.recurrence === "MONTHLY") {
+                    if (event.recurrence_end.getMonth() === month && event.recurrence_start.getDate() <= event.recurrence_end.getDate()
+                    && event.recurrence_start.getDate() === day) listOfEvents.push(event);
+                    else if (event.recurrence_start.getDate() === day) listOfEvents.push(event);
+                }
+            }
         }
         return listOfEvents
     }
@@ -90,19 +125,18 @@ const CalendarComp = ({calendars}: {calendars: Set<CalendarListed>}) => {
                 {Array.from({length: numOfDays}, (j2, i2) => {
                     const borderRight = ((i2 + dayStart + 1) % 7 == 0) ? "dashed #ffd5fb 3px" : "";
                     const borderBottom = ((i2 + dayStart) >= numRows - 7) ? "dashed #ffd5fb 3px" : "";
-                    const events = determineDayWEvent(i2, activeEvents);
+                    const events = determineDayWEvent(i2, currentMonth, (dayStart + i2 - 1) % 7, activeEvents);
                     return (
                     <div key = {"withNumDate" + i2} style = {{
                         borderRight: `${borderRight}`, borderBottom: `${borderBottom}`}}>
                         <h4>{i2 + 1}</h4>
                         {Array.from(events).map(event => (
-                        <button onClick = {() => setEventClicked(event)}>
+                        <button key = {"clickFor" + event.event_id} onClick = {() => setEventClicked(event)}>
                             {event.name}
                             <br/>
-                            {event.start_time.toLocaleDateString() + " " + event.start_time.toLocaleTimeString(
-                                "en-US", {hour: "2-digit", minute: "2-digit", hour12: false })}
-                            {(event.end_time) ? " to " + event.end_time.toLocaleDateString() + " " + event.end_time.toLocaleTimeString(
-                                "en-US", {hour: "2-digit", minute: "2-digit", hour12: false }) : ""}
+                            {(event.all_day) ? "All day" : ""};
+                            {(!event.all_day) ? event.start_time.toLocaleDateString() + " " + event.start_time.toISOString().slice(11, 16) : ""};
+                            {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleDateString() + " " + event.end_time.toISOString().slice(11, 16) : ""};
                         </button>)
                     )}
                     </div>
@@ -115,7 +149,13 @@ const CalendarComp = ({calendars}: {calendars: Set<CalendarListed>}) => {
                     return <div key = {"blankDateAfter" + i2} style = {{
                         borderRight: `${borderRight}`, borderBottom: `${borderBottom}`}}></div>
                 })}
-                {eventClicked && <EditEvent event = {eventClicked}/>}
+                {eventClicked && createPortal(<div>
+                    <EditEvent event = {eventClicked} base = {base} calendarL = {calendars} setCalendarL = {setCalendars}
+                    allCalendarL = {allCalendars} setAllCalendarL = {setAllCalendars}/>
+                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
+                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
+                    boxShadow: "none", zIndex: 5}} onClick = {() => {setEventClicked(undefined); document.body.style.overflow = "unset"}}>X</button>
+                </div>, document.body)}
             </div>
     )
 }
