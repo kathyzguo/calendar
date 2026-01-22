@@ -55,23 +55,24 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
             }
             if (event.recurrence_start && event.recurrence_end) {
                 if (event.recurrence === "DAILY") {
-                    if (event.recurrence_start.getMonth() === event.recurrence_end.getMonth() && 
+                    if (event.recurrence_start.getMonth() === event.recurrence_end.getMonth() &&
                     event.recurrence_start.getDate() <= day && event.recurrence_end.getDate() >= day) listOfEvents.push(event);
-                    else if (event.recurrence_start.getMonth() === month && event.recurrence_start.getDate() <= day)
-                    listOfEvents.push(event);
-                    else if (event.recurrence_end.getMonth() === month && event.recurrence_end.getDate() >= day)
-                    listOfEvents.push(event);
-                    else listOfEvents.push(event);
+                    else if (event.recurrence_start.getMonth() === month && event.recurrence_end.getMonth() !== month &&
+                    event.recurrence_start.getDate() <= day) listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() === month && event.recurrence_start.getMonth() !== month &&
+                    event.recurrence_end.getDate() >= day) listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() > month && event.recurrence_start.getMonth() < month) listOfEvents.push(event);
                 }
                 else if (event.recurrence === "WEEKLY") {
                     if (event.recurrence_start.getMonth() === event.recurrence_end.getMonth() && 
                     event.recurrence_start.getDate() <= day && event.recurrence_end.getDate() >= day &&
-                    event.recurrence_start.getDate() % 7 === day % 7) listOfEvents.push(event);
-                    else if (event.recurrence_start.getMonth() === month && event.recurrence_start.getDate() <= day
-                    && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
-                    else if (event.recurrence_end.getMonth() === month && event.recurrence_end.getDate() >= day
-                    && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
-                    else if (event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    else if (event.recurrence_start.getMonth() === month && event.recurrence_end.getMonth() !== month &&
+                    event.recurrence_start.getDate() <= day && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() === month && event.recurrence_start.getMonth() !== month &&
+                    event.recurrence_end.getDate() >= day && event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
+                    else if (event.recurrence_end.getMonth() > month && event.recurrence_start.getMonth() < month &&
+                    event.recurrence_start.getDay() === dayOfWeek) listOfEvents.push(event);
                 }
                 else if (event.recurrence === "MONTHLY") {
                     if (event.recurrence_end.getMonth() === month && event.recurrence_start.getDate() <= event.recurrence_end.getDate()
@@ -120,23 +121,25 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                 <h3>Friday</h3>
                 <h3>Saturday</h3>
                 {Array.from({length: dayStart}, (j2, i2) => (
-                    <div key = {"blankDate" + i2}></div>
+                    <div className = "dateFrame"  key = {"blankDate" + i2}></div>
                 ))}
                 {Array.from({length: numOfDays}, (j2, i2) => {
                     const borderRight = ((i2 + dayStart + 1) % 7 == 0) ? "dashed #ffd5fb 3px" : "";
                     const borderBottom = ((i2 + dayStart) >= numRows - 7) ? "dashed #ffd5fb 3px" : "";
-                    const events = determineDayWEvent(i2, currentMonth, (dayStart + i2 - 1) % 7, activeEvents);
+                    const events = determineDayWEvent(i2 + 1, currentMonth, (dayStart + i2) % 7, activeEvents);
                     return (
-                    <div key = {"withNumDate" + i2} style = {{
+                    <div className = "dateFrame" key = {"withNumDate" + i2} style = {{
                         borderRight: `${borderRight}`, borderBottom: `${borderBottom}`}}>
                         <h4>{i2 + 1}</h4>
                         {Array.from(events).map(event => (
                         <button key = {"clickFor" + event.event_id} onClick = {() => setEventClicked(event)}>
                             {event.name}
                             <br/>
-                            {(event.all_day) ? "All day" : ""};
-                            {(!event.all_day) ? event.start_time.toLocaleDateString() + " " + event.start_time.toISOString().slice(11, 16) : ""};
-                            {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleDateString() + " " + event.end_time.toISOString().slice(11, 16) : ""};
+                            {(event.all_day) ? "All day" : ""}
+                            {(!event.all_day) ? event.start_time.toLocaleDateString() + " " + event.start_time.toLocaleTimeString("en-US", 
+                            {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
+                            {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleDateString() + " " + event.end_time.toLocaleTimeString("en-US", 
+                            {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
                         </button>)
                     )}
                     </div>
@@ -146,7 +149,7 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                     const x = dayStart + numOfDays + i2;
                     const borderRight = ((x + 1) % 7 == 0) ? "dashed #ffd5fb 3px" : "";
                     const borderBottom = (x > numRows - 7) ? "dashed #ffd5fb 3px" : "";
-                    return <div key = {"blankDateAfter" + i2} style = {{
+                    return <div className = "dateFrame"  key = {"blankDateAfter" + i2} style = {{
                         borderRight: `${borderRight}`, borderBottom: `${borderBottom}`}}></div>
                 })}
                 {eventClicked && createPortal(<div>

@@ -132,8 +132,10 @@
 }
 
 .calendarFrame > div > button {
+    width: 80%;
     font-size: 0.85vw;
     margin: 0.8vw;
+    margin-left: 1.2vw;
     padding: 0.4vw;
     color: #ffffff;
     border-radius: 0.1vw;
@@ -141,23 +143,9 @@
     background-color: #a281f0;
     box-shadow: 0.3vw 0.3vw 0 #885af4, -0.3vw -0.3vw 0 #c7b0fe;;
     display: flex;
+    justify-content: center;
 }
 
-.calendar ::-webkit-scrollbar {
-    width: 0.3vw;
-    height: 0.3vw;
-}
-
-.calendar ::-webkit-scrollbar-track {
-  background: #fafafa;
-}
-
-.calendar ::-webkit-scrollbar-thumb {
-  background: #ffc9fa;
-  box-shadow: inset 0 0 0.3vw #ffc8f9; 
-  border-radius: 1vw;
-}
-
-.calendar ::-webkit-scrollbar-thumb:hover {
-  background: #ffb3f7; 
+.calendarFrame ::-webkit-scrollbar {
+    display: none;
 }

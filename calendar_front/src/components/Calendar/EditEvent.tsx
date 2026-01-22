@@ -19,12 +19,12 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
         if (eventS) {
             const newEvent: EventCreateS = {event_id: eventS.event_id,
                 calendar_id: eventS.calendar_id, name: eventS.name, description: eventS.description, 
-                start_date: eventS.start_time.toISOString().slice(0, 10),
-                start_time: eventS.start_time.toISOString().slice(11, 16),
-                end_date: (eventS.end_time) ? eventS.end_time.toISOString().slice(0, 10) : "",
-                end_time: (eventS.end_time) ? eventS.end_time.toISOString().slice(11, 16) : "",
+                start_date: eventS.start_time.toLocaleDateString("sv-SE"),
+                start_time: eventS.start_time.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: false}),
+                end_date: (eventS.end_time) ? eventS.end_time.toLocaleDateString("sv-SE") : "",
+                end_time: (eventS.end_time) ? eventS.end_time.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: false}) : "",
                 all_day: eventS.all_day, recurrence: eventS.recurrence,
-                re_date: (eventS.recurrence_end) ? eventS.recurrence_end.toISOString().slice(0, 10) : ""
+                re_date: (eventS.recurrence_end) ? eventS.recurrence_end.toLocaleDateString("sv-SE") : ""
             }
             return newEvent;
         } else return {event_id: 0, calendar_id: 0, name: "", description: "", start_date: "", start_time: "", end_date: "", end_time: "",
@@ -32,14 +32,14 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
     }
 
     function fromSToEvent(eventCS: EventCreateS): Event {
-        const real_s_time: Date = (eventCS.all_day) ? new Date(eventCS.start_date + "T00:00:00Z") : 
-        new Date(eventCS.start_date + "T" + eventCS.start_time + ":00Z");
+        const real_s_time: Date = (eventCS.all_day) ? new Date(eventCS.start_date + "T00:00:00") : 
+        new Date(eventCS.start_date + "T" + eventCS.start_time + ":00");
         const real_e_time: Date | undefined = (eventCS.end_date === "") ? undefined : 
-        new Date(eventCS.end_date + "T" + eventCS.end_time + ":00Z");
+        new Date(eventCS.end_date + "T" + eventCS.end_time + ":00");
         const recur: string = (recurring) ? eventCS.recurrence : "NONE";
         const real_rs_time: Date | undefined = (eventCS.recurrence !== "NONE") ? real_s_time : undefined;
         const real_re_time: Date | undefined = (eventCS.re_date === "") ? undefined : 
-        new Date(eventCS.re_date + "T00:00:00Z");
+        new Date(eventCS.re_date + "T00:00:00");
         const newEvent: Event = {event_id: eventCS.event_id, calendar_id: eventCS.calendar_id, name: eventCS.name, description: eventCS.description,
             start_time: real_s_time, end_time: real_e_time, all_day: eventCS.all_day, recurrence: recur,
             recurrence_start: real_rs_time, recurrence_end: real_re_time};
