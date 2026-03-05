@@ -22,6 +22,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: flex-start;
     gap: 40px;
     margin: 40px;
 }
@@ -43,11 +44,31 @@
 }
 
 .mainExistingItem {
-    border-image: linear-gradient(to right, #00000000 0%, #6D2A96 50%, #00000000 100%) 1;
-    border-bottom: solid 4px;
+    padding: 8px;
+    border-bottom: #b566e9 solid 4px;
 }
-.mainNewStart > h3 {
+
+.mainExistingItem > h4 {
+    padding: 0px 10px;
+    margin: 0px;
+    font-size: 22px;
+    color: #ffffff;
+}
+
+.mainExistingItem > p {
+    padding: 0px 10px;
+    margin: 0px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.mainNewStart > a {
+    display: inline-block;
     padding: 10px;
     font-size: 25px;
+    color: #ffffff;
+}
+
+.mainNewStart > a:hover {
     color: #ffffff;
 }

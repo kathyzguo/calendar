@@ -18,18 +18,22 @@ const Taskbar = (({type} : {type: number}) => {
                     <Link to = "/goals">Goals</Link>
                 </button>
             </div>
-            <div>
-                <button className = {`taskButton ${type === 3 ? "activeTaskButton" : ""}`}>
-                    <Link to = "/time_tracker">Time Tracker</Link>
-                </button>
-            </div>
-            <div>
-                <button className = {`taskButton ${type === 4 ? "activeTaskButton" : ""}`}>
-                    <Link to = "/custom_trackers">Custom Trackers</Link>
-                </button>
-            </div>
         </nav>
     )
 });
 
 export default Taskbar
+
+/*
+Cont TBD (?)
+<div>
+    <button className = {`taskButton ${type === 3 ? "activeTaskButton" : ""}`}>
+        <Link to = "/time_tracker">Time Tracker</Link>
+    </button>
+</div>
+<div>
+    <button className = {`taskButton ${type === 4 ? "activeTaskButton" : ""}`}>
+        <Link to = "/custom_trackers">Custom Trackers</Link>
+    </button>
+</div>
+*/

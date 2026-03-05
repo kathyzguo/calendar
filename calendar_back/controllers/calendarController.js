@@ -49,7 +49,7 @@ async function editCalendar(calendar_id, name, description) {
     try {
         const edit = await pool.query(`UPDATE calendars SET name = $1, description = $2 WHERE id = $3`, 
         [name, description, calendar_id]);
-        return {status: true, message: "Event successfully edited"};
+        return {status: true, message: "Calendar successfully edited"};
     }
     catch (err) {
         console.error("Error:", err);

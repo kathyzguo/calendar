@@ -1,4 +1,4 @@
-import type {CalendarListed, Event, EventJSON, CalendarCreate} from "../../interfaces/CalendarInterface"
+import type {CalendarListed, CalendarCreate} from "../../interfaces/CalendarInterface"
 import {useRef, useState, useEffect} from "react"
 import {createPortal} from "react-dom"
 import {useNavigate} from 'react-router-dom'

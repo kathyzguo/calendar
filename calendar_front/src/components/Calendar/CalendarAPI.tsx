@@ -147,9 +147,6 @@ const deleteCalendar = async (calendar_id: number, base: string,
 
 const makeNewEvent = async (event_info: Event, base: string, 
     listOfCalendars: Set<CalendarListed>): Promise<CalendarListed | string> => {
-    console.log({...event_info, start_time: event_info.start_time.toISOString(), 
-                end_time: event_info.end_time?.toISOString(), recurrence_start: event_info.recurrence_start?.toISOString(),
-                recurrence_end: event_info.recurrence_end?.toISOString()});
     try {
         const response = await fetch(`${base}/calendar/createEvent`, {
             method: "POST",

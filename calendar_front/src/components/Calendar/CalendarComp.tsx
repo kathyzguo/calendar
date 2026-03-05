@@ -136,9 +136,8 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                             {event.name}
                             <br/>
                             {(event.all_day) ? "All day" : ""}
-                            {(!event.all_day) ? event.start_time.toLocaleDateString() + " " + event.start_time.toLocaleTimeString("en-US", 
-                            {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
-                            {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleDateString() + " " + event.end_time.toLocaleTimeString("en-US", 
+                            {(!event.all_day) ? event.start_time.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
+                            {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleTimeString("en-US", 
                             {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
                         </button>)
                     )}
