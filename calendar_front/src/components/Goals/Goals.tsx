@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import Taskbar from "../Home/Taskbar"
 import CreateGoalCat from "./CreateGoalCat";
 import CreateGoalDesc from "./CreateGoalDesc";
-import EditGoalCat from "./EditGoalCat";
+import EditGoalCat from "./EditGoalCat"
 import EditGoalDesc from "./EditGoalDesc";
 
 const Goals = ({base, userID} : {base: string, userID: number}) => {
