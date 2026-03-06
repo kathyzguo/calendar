@@ -6,7 +6,7 @@ import Taskbar from "../Home/Taskbar"
 import CreateGoalCat from "./CreateGoalCat";
 import CreateGoalDesc from "./CreateGoalDesc";
 import EditGoalCat from "./EditGoalCat";
-import EditGoalDesc from "./EditGoalDesc"
+import EditGoalDesc from "./EditGoalDesc";
 
 const Goals = ({base, userID} : {base: string, userID: number}) => {
     const navigate = useNavigate();
