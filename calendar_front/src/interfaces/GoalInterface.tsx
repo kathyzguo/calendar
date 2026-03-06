@@ -24,3 +24,9 @@ export interface GoalCatCreate {
     name: string,
     description: string
 }
+
+export interface GoalDescCreate {
+    goal_id: number,
+    name: string,
+    description: string
+}

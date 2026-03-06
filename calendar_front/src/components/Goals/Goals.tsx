@@ -3,11 +3,19 @@ import {loadGoalCats, deleteGoalCat} from "./GoalsAPI"
 import {useEffect, useState} from "react"
 import {useNavigate} from 'react-router-dom'
 import Taskbar from "../Home/Taskbar"
+import CreateGoalCat from "./CreateGoalCat";
+import CreateGoalDesc from "./CreateGoalDesc";
+import EditGoalCat from "./EditGoalCat";
+import EditGoalDesc from "./EditGoalDesc";
 
 const Goals = ({base, userID} : {base: string, userID: number}) => {
     const navigate = useNavigate();
     const [listOfGoalCats, setListOfGoalCats] = useState<Set<GoalListed>>();
     const [activeGoalCats, setActiveGoalCats] = useState<Set<GoalListed>>();
+    const [showCreateE, setShowCreateE] = useState<number | undefined>(undefined);
+    const [showCreateC, setShowCreateC] = useState<number | undefined>(undefined);
+    const [showEditC, setShowEditC] = useState<CalendarCreate | undefined>(undefined);
+    const [showEditC, setShowEditC] = useState<CalendarCreate | undefined>(undefined);
     
     useEffect(() => {
         if (userID === -1) {
