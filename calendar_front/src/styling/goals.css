@@ -1,0 +1,35 @@
+.goalTitle {
+    width: 90%;
+}
+
+.goalTitle > h1 {
+    font-size: 34px;
+    padding: 10px;
+}
+
+.parentGoal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+}
+
+.goalBlock {
+    width: 90%;
+    border: #0086c9 solid 7px;
+    border-radius: 7px;
+    background-color: #0aa3f0;
+}
+
+.goalBlock > h3 {
+    font-size: 24px;
+    color: #ffffff;
+    padding-top: 5px;
+}
+
+.goalBlock > label {
+    font-size: 20px;
+    color: #ffffff;
+    padding-bottom: 5px;
+}

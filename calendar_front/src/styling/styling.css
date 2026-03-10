@@ -1,6 +1,8 @@
 @import url("./taskbar.css");
+@import url("./leftNav.css");
 @import url("./mainpage.css");
 @import url("./calendar.css");
+@import url("./goals.css");
 
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
