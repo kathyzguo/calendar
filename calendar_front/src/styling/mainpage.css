@@ -45,7 +45,6 @@
 
 .mainExistingItem {
     padding: 8px;
-    border-bottom: #b566e9 solid 4px;
 }
 
 .mainExistingItem > h4 {
@@ -53,6 +52,8 @@
     margin: 0px;
     font-size: 22px;
     color: #ffffff;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .mainExistingItem > p {
@@ -60,6 +61,8 @@
     margin: 0px;
     font-size: 20px;
     color: #ffffff;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .mainNewStart > a {

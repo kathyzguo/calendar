@@ -79,7 +79,7 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
                 <nav className = "leftnav" style = {{top: `${heightOfTask}px`}}>
                     <h2>Active Calendars</h2>
                     {Array.from(listOfCalendars).sort((a, b) => a.calendar_id - b.calendar_id).map(c => (
-                        <label key = {"keyCalendar" + c.calendar_id}>
+                        <label key = {"keyCalendar" + c.calendar_id} className = "overflow">
                             <input type = "checkbox" id = {"calendar" + c.calendar_id} onChange = {(e) => {
                                 for (const testC of listOfCalendars) {
                                     if (testC.calendar_id === c.calendar_id) {

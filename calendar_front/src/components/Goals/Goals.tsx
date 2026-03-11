@@ -17,7 +17,7 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
     const [heightOfTask, setHeightOfTask] = useState(0);
     const [showCreateC, setShowCreateC] = useState<number | undefined>(undefined);
     const [showCreateD, setShowCreateD] = useState<number | undefined>(undefined);
-    const [showEditC, setShowEditC] = useState<GoalCatCreate | undefined>(undefined);
+    const [showEditC, setShowEditC] = useState<GoalCat | undefined>(undefined);
     const [showEditD, setShowEditD] = useState<GoalDesc | undefined>(undefined);
     
     useEffect(() => {
@@ -47,7 +47,7 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
     const handleEditCatSubmission = () => {
         if (activeGoalCats.size === 1) {
             for (const g of activeGoalCats) {
-                setShowEditC({user_id: userID, name: g.name, description: g.description});
+                setShowEditC({goal_id: g.goal_id, name: g.name, description: g.description});
             }
         }
     }
@@ -77,7 +77,7 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                 <nav className = "leftnav" style = {{top: `${heightOfTask}px`}}>
                     <h2>Active Goal Categories</h2>
                     {Array.from(listOfGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (
-                        <label key = {"keyGoal" + c.goal_id}>
+                        <label key = {"keyGoal" + c.goal_id} className = "overflow">
                             <input type = "checkbox" id = {"goal" + c.goal_id} onChange = {(e) => {
                                 for (const testC of listOfGoalCats) {
                                     if (testC.goal_id === c.goal_id) {
@@ -107,44 +107,44 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                     <div className = "goalTitle">
                         <h1>Active Goals:</h1>
                     </div>
-                    {Array.from(listOfGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
-                        (!desc.completed ?
-                        <div className = "goalBlock" key = {c.goal_id + "keyGoal" + desc.id} onClick = {(e) => {
-                            setShowEditD(desc)
-                        }}>
-                            <h3>{desc.name}</h3>
+                    {Array.from(activeGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
+                        (!desc.completed &&
+                        <div className = "goalBlock" key = {c.goal_id + "keyGoal" + desc.id}>
+                            <h3 onClick = {(e) => {setShowEditD(desc)}}>{desc.name}</h3>
                             <label>
                                 {desc.description}
                                 <input type = "checkbox" onChange = {async (e) => {
                                     const changeCheck = await editGoalDesc({...desc, completed: true}, base, listOfGoalCats)
                                     if (changeCheck) {
-                                        setListOfGoalCats(listOfGoalCats)
-                                        setActiveGoalCats(activeGoalCats)
+                                     const newListOfGoalCats = new Set(listOfGoalCats)
+                                        const newActiveGoalCats = new Set(activeGoalCats)
+                                        setListOfGoalCats(newListOfGoalCats)
+                                        setActiveGoalCats(newActiveGoalCats)
                                     }
                                 }}/>
                             </label>
-                        </div> : null)))
+                        </div>)))
                     )}
                     <div className = "goalTitle">
                         <h1>Completed Goals:</h1>
                     </div>
-                    {Array.from(listOfGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
-                        (desc.completed ?
-                        <div className = "goalBlock" key = {c.goal_id + "keyGoal" + desc.id} onClick = {(e) => {
-                            setShowEditD(desc)
-                        }}>
-                            <h3>{desc.name}</h3>
-                            <p>{desc.description}</p>
+                    {Array.from(activeGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
+                        (desc.completed &&
+                        <div className = "goalBlock" key = {c.goal_id + "keyGoal" + desc.id}>
+                            <h3 onClick = {(e) => {setShowEditD(desc)}}>{desc.name}</h3>
                             <label>
-                                <input type = "checkbox" onChange = {async (e) => {
-                                    const changeCheck = await editGoalDesc({...desc, completed: true}, base, listOfGoalCats)
+                                {desc.description}
+                                <input type = "checkbox" checked onChange = {async (e) => {
+                                    const changeCheck = await editGoalDesc({...desc, completed: false}, base, listOfGoalCats)
                                     if (changeCheck) {
-                                        setListOfGoalCats(listOfGoalCats)
-                                        setActiveGoalCats(activeGoalCats)
+                                        const newListOfGoalCats = new Set(listOfGoalCats)
+                                        const newActiveGoalCats = new Set(activeGoalCats)
+                                        setListOfGoalCats(newListOfGoalCats)
+                                        setActiveGoalCats(newActiveGoalCats)
                                     }
                                 }}/>
                             </label>
-                        </div> : null)))
+                        </div>)))
                     )}
                 </div>   
             </div>

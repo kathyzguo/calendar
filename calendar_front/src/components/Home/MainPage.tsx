@@ -1,13 +1,16 @@
 import {useState, useEffect} from "react"
 import {Link, useNavigate} from 'react-router-dom'
 import type {CalendarListed} from "../../interfaces/CalendarInterface"
+import type {GoalListed} from "../../interfaces/GoalInterface"
 import {loadCalendar} from "../Calendar/CalendarAPI"
+import {loadGoalCats} from "../Goals/GoalsAPI"
 import Taskbar from "./Taskbar"
 
 const MainPage = ({base, userID}: {base: string, userID: number}) => {
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState("");
     const [listOfCalendars, setListOfCalendars] = useState<Set<CalendarListed>>(new Set<CalendarListed>());
+    const [listOfGoals, setListOfGoals] = useState<Set<GoalListed>>(new Set<GoalListed>());
 
     useEffect(() => {
         if (userID === -1) {
@@ -43,6 +46,13 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
         setCalendars();
     }, []);
 
+    useEffect(() => {
+        const setGoals = async () => {
+            setListOfGoals(await loadGoalCats(userID, base));
+        }
+        setGoals();
+    }, []);
+
     return (
         <div>
             <Taskbar type = {0}/>
@@ -59,7 +69,7 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                     </div>
                     <div className = "mainBlockListing">
                         {Array.from(listOfCalendars).sort((a, b) => a.calendar_id - b.calendar_id).map(c => (
-                        <div className = "mainExistingItem" key = {"displayCalendar" + c.calendar_id}>
+                        <div className = "mainExistingItem" style = {{borderBottom: "#b566e9 solid 4px"}} key = {"displayCalendar" + c.calendar_id}>
                             <h4>{c.name}</h4>
                             <p>{c.description}</p>
                         </div>))}
@@ -69,13 +79,18 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                     </div>
                 </div>
                 <div className = "mainBlock" style = 
-                {{backgroundColor: "#94A1FF", borderColor: "#2c3ec4ff"}}>
+                {{backgroundColor: "#8196f3", borderColor: "#2c3ec4ff"}}>
                     <div className = "mainBlockTitle" style = 
                     {{backgroundImage: "linear-gradient(to bottom, #6B7CFF, #4F64FF)", borderColor: "#3B52FF"}}>
                         <h2>Goals</h2>
                     </div>
                     <div className = "mainBlockListing">
-                        <div className = "mainNewStart">
+                        {Array.from(listOfGoals).sort((a, b) => a.goal_id - b.goal_id).map(c => (
+                        <div className = "mainExistingItem" style = {{borderBottom: "#576af6 solid 4px"}} key = {"displayGoalCat" + c.goal_id}>
+                            <h4>{c.name}</h4>
+                            <p>{c.description}</p>
+                        </div>))}
+                        <div className = "mainNewStart" style = {{backgroundColor: "#6e87f4"}}>
                             <Link to = "/goals">Log new goal</Link>
                         </div>
                     </div>

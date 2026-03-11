@@ -13,6 +13,7 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
     const [errorTogether, setErrorTogether] = useState("");
     const [success, setSuccess] = useState("");
     const [editedEvent, setEditedEvent] = useState<EventCreateS>(fromEventToS(event));
+    const [deleted, setDeleted] = useState(false);
     const oddmonths = [1, 3, 5, 8, 10];
 
     function fromEventToS(eventS: Event | undefined): EventCreateS {
@@ -137,7 +138,7 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
 
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (editedEvent && event) {
+        if (editedEvent && event && !deleted) {
             if (!editedEvent.name || editedEvent.name === "") {setErrorTogether("Please enter a name"); return}
             if (!editedEvent.description || editedEvent.description === "") {setErrorTogether("Please enter a description"); return}
             if (!editedEvent.start_date) {setErrorTogether("Please enter a start date"); return}

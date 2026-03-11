@@ -5,6 +5,7 @@
 .goalTitle > h1 {
     font-size: 34px;
     padding: 10px;
+    margin-bottom: 0px;
 }
 
 .parentGoal {
@@ -12,7 +13,10 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 0px;
+    align-self: flex-start;
+    gap: 20px;
+    min-width: 0;
+    flex: 1;
 }
 
 .goalBlock {
@@ -20,16 +24,16 @@
     border: #0086c9 solid 7px;
     border-radius: 7px;
     background-color: #0aa3f0;
+    padding: 5px 10px;
 }
 
 .goalBlock > h3 {
     font-size: 24px;
     color: #ffffff;
-    padding-top: 5px;
+    cursor: pointer;
 }
 
 .goalBlock > label {
     font-size: 20px;
     color: #ffffff;
-    padding-bottom: 5px;
 }

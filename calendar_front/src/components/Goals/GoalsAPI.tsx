@@ -199,7 +199,7 @@ const editGoalDesc = async (goalDesc_info: GoalDesc, base: string,
 const deleteGoalDesc = async (goal_id: number, goalDesc_id: number, base: string,
     listOfGoalCats: Set<GoalListed>): Promise<string> => {
     try {
-        const jsonObj = {goalD_id: goalDesc_id};
+        const jsonObj = {id: goalDesc_id};
         const response = await fetch(`${base}/goal/deleteGoalDesc`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},

@@ -5,7 +5,8 @@
 .leftnav {
     background-color: #f2f2f2;
     min-height: 100vh;
-    width: 175px;
+    width: 185px;
+    flex-shrink: 0;
     border-right: solid 4px #8f8f8f;
 }
 
@@ -49,4 +50,9 @@
 
 .leftNavDiv > button:hover {
     background-color: #772ccd;
+}
+
+.overflow {
+    overflow-wrap: break-word;
+    word-break: break-word;
 }

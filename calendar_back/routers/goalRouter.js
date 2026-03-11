@@ -41,14 +41,14 @@ router.post("/createGoalDesc", async (req, res) => {
 });
 
 router.post("/editGoalDesc", async (req, res) => {
-    const {goalD_id, name, description, completed} = req.body;
-    const goalDescEdit = await editGoalDesc(goalD_id, name, description, completed);
+    const {id, name, description, completed} = req.body;
+    const goalDescEdit = await editGoalDesc(id, name, description, completed);
     res.json(goalDescEdit);
 });
 
 router.post("/deleteGoalDesc", async (req, res) => {
-    const {goalD_id} = req.body;
-    const goalDescDelete = await deleteGoalDesc(goalD_id);
+    const {id} = req.body;
+    const goalDescDelete = await deleteGoalDesc(id);
     res.json(goalDescDelete);
 });
 
