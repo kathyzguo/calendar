@@ -72,7 +72,7 @@ html, body {
 
 .mainExistingItem {
     padding: 8px;
-    border-bottom: #6609c3 solid 4px
+    border-bottom: #7010cf solid 4px
 }
 
 .mainExistingItem > h4 {
@@ -97,13 +97,9 @@ html, body {
     background-color: #7d1cde
 }
 
-.mainNewStart > a {
+.mainNewStart > h4 {
     display: inline-block;
     padding: 10px;
     font-size: 25px;
-    color: #ffffff;
-}
-
-.mainNewStart > a:hover {
     color: #ffffff;
 }

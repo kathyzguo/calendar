@@ -73,9 +73,11 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                             <h4>{c.name}</h4>
                             <p>{c.description}</p>
                         </div>))}
-                        <div className = "mainNewStart">
-                            <Link to = "/calendars">Start new calendar</Link>
-                        </div>
+                        <Link to = "/calendars">
+                            <div className = "mainNewStart">
+                                <h4>Start new calendar</h4>
+                            </div>
+                        </Link>
                     </div>
                 </div>
                 <div className = "mainBlock">
@@ -88,9 +90,11 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                             <h4>{c.name}</h4>
                             <p>{c.description}</p>
                         </div>))}
-                        <div className = "mainNewStart">
-                            <Link to = "/goals">Log new goal</Link>
-                        </div>
+                        <Link to = "/goals">
+                            <div className = "mainNewStart">
+                                <h4>Log new goal</h4>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>

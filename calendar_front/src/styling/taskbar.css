@@ -11,11 +11,12 @@
 }
 
 .taskButton:hover {
-    background-color: #1E2344;
+    background-color: #070B27;
 }
 
 .taskButton > a {
     padding: 14px;
+    font-family: "Schibsted Grotesk", sans-serif;
     font-size: 25px;
     font-weight: 400;
     color: #ffffff;
