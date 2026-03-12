@@ -57,40 +57,38 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
         <div>
             <Taskbar type = {0}/>
             <div className = "mainTitle">
-                <h1>Welcome back, {displayName}</h1>
-                <h2>What would you like to track today?</h2>
+                <div className = "wordTitle">
+                    <h1>Welcome back, {displayName}</h1>
+                    <h2>What would you like to track today?</h2>
+                </div>
             </div>
             <div className = "mainFlowBlock">
-                <div className = "mainBlock" style = 
-                {{backgroundColor: "#D28FFF", borderColor: "#8923cdff"}}>
-                    <div className = "mainBlockTitle" style = 
-                    {{backgroundImage: "linear-gradient(to bottom, #CD81FF, #BB61F7)", borderColor: "#AA2BFF"}}>
+                <div className = "mainBlock">
+                    <div className = "mainBlockTitle">
                         <h2>Calendars</h2>
                     </div>
                     <div className = "mainBlockListing">
                         {Array.from(listOfCalendars).sort((a, b) => a.calendar_id - b.calendar_id).map(c => (
-                        <div className = "mainExistingItem" style = {{borderBottom: "#b566e9 solid 4px"}} key = {"displayCalendar" + c.calendar_id}>
+                        <div className = "mainExistingItem" key = {"displayCalendar" + c.calendar_id}>
                             <h4>{c.name}</h4>
                             <p>{c.description}</p>
                         </div>))}
-                        <div className = "mainNewStart" style = {{backgroundColor: "#c87ff9"}}>
+                        <div className = "mainNewStart">
                             <Link to = "/calendars">Start new calendar</Link>
                         </div>
                     </div>
                 </div>
-                <div className = "mainBlock" style = 
-                {{backgroundColor: "#8196f3", borderColor: "#2c3ec4ff"}}>
-                    <div className = "mainBlockTitle" style = 
-                    {{backgroundImage: "linear-gradient(to bottom, #6B7CFF, #4F64FF)", borderColor: "#3B52FF"}}>
+                <div className = "mainBlock">
+                    <div className = "mainBlockTitle">
                         <h2>Goals</h2>
                     </div>
                     <div className = "mainBlockListing">
                         {Array.from(listOfGoals).sort((a, b) => a.goal_id - b.goal_id).map(c => (
-                        <div className = "mainExistingItem" style = {{borderBottom: "#576af6 solid 4px"}} key = {"displayGoalCat" + c.goal_id}>
+                        <div className = "mainExistingItem" key = {"displayGoalCat" + c.goal_id}>
                             <h4>{c.name}</h4>
                             <p>{c.description}</p>
                         </div>))}
-                        <div className = "mainNewStart" style = {{backgroundColor: "#6e87f4"}}>
+                        <div className = "mainNewStart">
                             <Link to = "/goals">Log new goal</Link>
                         </div>
                     </div>

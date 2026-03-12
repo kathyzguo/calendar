@@ -1,21 +1,44 @@
-.mainTitle {
-    margin-top: 10px;
-    margin-bottom: 20px;
+html, body {
+    background-color: #141835;
 }
 
-.mainTitle > h1 {
+.mainTitle {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    height: 150px;
+    background-image: url("citylandscape.png");
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 8px ridge rgba(255, 255, 255, 0.507);
+}
+
+.wordTitle {
+    margin-top: -70px;
+    padding: 15px 50px 0px 50px;
+    background-color: #8216ee77;
+    border: 6px double #530ce24a;
+}
+
+.wordTitle > h1 {
     margin-bottom: 5px;
     text-align: center;
+    font-family: "Playfair Display", serif;
     font-size: 40px;
-    font-weight: 500;
+    font-weight: 600;
+    color: #ffffff;
 }
 
-.mainTitle > h2 {
+.wordTitle > h2 {
     margin-top: 5px;
     margin-bottom: 20px;
     text-align: center;
+    font-family: "Playfair Display", serif;
     font-size: 25px;
-    font-weight: 400;
+    font-weight: 500;
+    color: #ffffff;
 }
 
 .mainFlowBlock {
@@ -31,10 +54,14 @@
     width: 700px;
     border: #000000 solid 7px;
     border-radius: 7px;
+    background-color: #8c26f1;
+    border-color: #450488;
 }
 
 .mainBlockTitle {
     border-bottom: solid 7px;
+    background-image: linear-gradient(to bottom, #8b2af2, #7409E1);
+    border-color: #5805AD;
 }
 
 .mainBlockTitle > h2 {
@@ -45,6 +72,7 @@
 
 .mainExistingItem {
     padding: 8px;
+    border-bottom: #6609c3 solid 4px
 }
 
 .mainExistingItem > h4 {
@@ -63,6 +91,10 @@
     color: #ffffff;
     overflow-wrap: break-word;
     word-break: break-word;
+}
+
+.mainNewStart {
+    background-color: #7d1cde
 }
 
 .mainNewStart > a {

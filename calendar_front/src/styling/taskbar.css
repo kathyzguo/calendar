@@ -1,17 +1,17 @@
 .taskbar {
     display: flex;
     flex-wrap: wrap;
-    background-color: #000000;
+    background-color: #020628;
 }
 
 .taskButton {
-    background-color: #000000;
+    background-color: #020628;
     height: 60px;
     border: none;
 }
 
 .taskButton:hover {
-    background-color: #222222;
+    background-color: #1E2344;
 }
 
 .taskButton > a {
@@ -26,9 +26,9 @@
 }
 
 .activeTaskButton {
-    background-color: #ff8cff;
+    background-color: #7409E1;
 }
 
 .activeTaskButton:hover {
-    background-color: #ff8cff;
+    background-color: #7409E1;
 }
