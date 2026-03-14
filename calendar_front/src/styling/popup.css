@@ -1,0 +1,38 @@
+.popupDiv {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 4;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000097;
+    border: 0
+}
+
+.popupContainer {
+    width: 470px;
+    padding: 20px;
+    background-color: #ffffff;
+    position: relative;
+    max-height: 650px;
+    overflow: auto;
+}
+
+.purpBack {
+    background-color: #7409E1;
+    border-color: #7409E1;
+}
+
+.purpBack:hover {
+    background-color: #5805AD;
+    border-color: #5805AD;
+}
+
+.purpCheck {
+    accent-color: #7409E1 !important;
+}

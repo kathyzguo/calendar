@@ -2,8 +2,8 @@ import type {GoalListed, GoalCatCreate} from "../../interfaces/GoalInterface"
 import {useEffect, useState} from "react"
 import {makeNewGoalCat} from "./GoalsAPI"
 
-const CreateGoalCat = ({user_id, base, goalL, setGoalL, allGoalL, setAllGoalL}: 
-    {user_id: number | undefined, base: string, 
+const CreateGoalCat = ({user_id, setUserID, base, goalL, setGoalL, allGoalL, setAllGoalL}: 
+    {user_id: number | undefined, setUserID: (c: number | undefined) => void, base: string, 
     goalL: Set<GoalListed>, setGoalL: (c: Set<GoalListed>) => void,
     allGoalL: Set<GoalListed>, setAllGoalL: (c: Set<GoalListed>) => void}) => {
     const [errorTogether, setErrorTogether] = useState("");
@@ -14,6 +14,17 @@ const CreateGoalCat = ({user_id, base, goalL, setGoalL, allGoalL, setAllGoalL}:
     useEffect(() => {
         if (user_id) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "unset";
+    }, [])
+
+    useEffect(() => {
+        const keyEscHandle = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setUserID(undefined);
+                document.body.style.overflow = "unset"
+            }
+        };
+        document.addEventListener("keydown", keyEscHandle)
+        return () => document.removeEventListener("keydown", keyEscHandle);
     }, [])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +52,8 @@ const CreateGoalCat = ({user_id, base, goalL, setGoalL, allGoalL, setAllGoalL}:
 
     return (
         user_id &&
-        <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", position: "fixed", top: "0", right: "0", left: "0", bottom: "0",
-            zIndex: "4", justifyContent: "center", alignItems: "center", backgroundColor: "#00000097", border: "0"}}>
-            <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white", position: "relative",
-                maxHeight: "650px", overflow: "scroll"}}>
+        <div className = "popupDiv">
+            <div className = "border border-5 rounded-3 popupContainer">
                 <h2>Create Goal Category</h2>
                 {success !== "" && <p style = {{color: "#4400FF"}}>{success}</p>}
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>

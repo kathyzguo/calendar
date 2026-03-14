@@ -62,12 +62,19 @@ html, body {
     border-bottom: solid 7px;
     background-image: linear-gradient(to bottom, #8b2af2, #7409E1);
     border-color: #5805AD;
+    display: flex;
+    align-items: center;
+    height: 77px;
 }
 
 .mainBlockTitle > h2 {
     padding: 10px;
     font-size: 35px;
     color: #ffffff;
+}
+
+.mainBlockTitle > img {
+    height: 100%;
 }
 
 .mainExistingItem {

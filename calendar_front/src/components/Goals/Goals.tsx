@@ -77,18 +77,20 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                 <nav className = "leftnav" style = {{top: `${heightOfTask}px`}}>
                     <h2>Active Goal Categories</h2>
                     {Array.from(listOfGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (
-                        <label key = {"keyGoal" + c.goal_id} className = "overflow">
-                            <input type = "checkbox" id = {"goal" + c.goal_id} onChange = {(e) => {
-                                for (const testC of listOfGoalCats) {
-                                    if (testC.goal_id === c.goal_id) {
-                                        const newActiveGoalCats = new Set<GoalListed>(activeGoalCats);
-                                        (e.target.checked) ? newActiveGoalCats.add(testC) : newActiveGoalCats.delete(testC);
-                                        setActiveGoalCats(newActiveGoalCats);
+                        <div className = "leftNavChange">
+                            <label key = {"keyGoal" + c.goal_id} className = "overflow">
+                                <input type = "checkbox" id = {"goal" + c.goal_id} onChange = {(e) => {
+                                    for (const testC of listOfGoalCats) {
+                                        if (testC.goal_id === c.goal_id) {
+                                            const newActiveGoalCats = new Set<GoalListed>(activeGoalCats);
+                                            (e.target.checked) ? newActiveGoalCats.add(testC) : newActiveGoalCats.delete(testC);
+                                            setActiveGoalCats(newActiveGoalCats);
+                                        }
                                     }
-                                }
-                            }}/>
-                            {c.name}
-                        </label>
+                                }}/>
+                                {c.name}
+                            </label>
+                        </div>
                     ))}
                     <div className = "leftNavDiv" style = {{marginTop: "10px"}}>
                         <button onClick = {() => setShowCreateC(userID)}>Create goal category</button>
@@ -148,33 +150,25 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                     )}
                 </div>   
             </div>
-            {showCreateC && createPortal(<div>
-                    <CreateGoalCat user_id = {showCreateC} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
+            {showCreateC && createPortal(
+                <div>
+                    <CreateGoalCat user_id = {showCreateC} setUserID = {setShowCreateC} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
                     allGoalL = {listOfGoalCats} setAllGoalL = {setListOfGoalCats}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateC(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
-            {showCreateD && createPortal(<div>
-                    <CreateGoalDesc goal_id = {showCreateD} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
+            {showCreateD && createPortal(
+                <div>
+                    <CreateGoalDesc goal_id = {showCreateD} setGoalID = {setShowCreateD} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
                     allGoalL = {listOfGoalCats} setAllGoalL = {setListOfGoalCats}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateD(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
-            {showEditC && createPortal(<div>
-                    <EditGoalCat goal_info = {showEditC} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
+            {showEditC && createPortal(
+                <div>
+                    <EditGoalCat goal_info = {showEditC} setGoalCat = {setShowEditC} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
                     allGoalL = {listOfGoalCats} setAllGoalL = {setListOfGoalCats}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowEditC(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
-            {showEditD && createPortal(<div>
-                    <EditGoalDesc goalDesc = {showEditD} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
+            {showEditD && createPortal(
+                <div>
+                    <EditGoalDesc goalDesc = {showEditD} setGoalDesc = {setShowEditD} base = {base} goalL = {activeGoalCats} setGoalL = {setActiveGoalCats}
                     allGoalL = {listOfGoalCats} setAllGoalL = {setListOfGoalCats}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowEditD(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
         </div>
 )

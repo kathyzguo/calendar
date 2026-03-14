@@ -79,18 +79,20 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
                 <nav className = "leftnav" style = {{top: `${heightOfTask}px`}}>
                     <h2>Active Calendars</h2>
                     {Array.from(listOfCalendars).sort((a, b) => a.calendar_id - b.calendar_id).map(c => (
-                        <label key = {"keyCalendar" + c.calendar_id} className = "overflow">
-                            <input type = "checkbox" id = {"calendar" + c.calendar_id} onChange = {(e) => {
-                                for (const testC of listOfCalendars) {
-                                    if (testC.calendar_id === c.calendar_id) {
-                                        const newActiveCalendars = new Set<CalendarListed>(activeCalendars);
-                                        (e.target.checked) ? newActiveCalendars.add(testC) : newActiveCalendars.delete(testC);
-                                        setActiveCalendars(newActiveCalendars);
+                        <div className = "leftNavChange">
+                            <label key = {"keyCalendar" + c.calendar_id} className = "overflow">
+                                <input type = "checkbox" id = {"calendar" + c.calendar_id} onChange = {(e) => {
+                                    for (const testC of listOfCalendars) {
+                                        if (testC.calendar_id === c.calendar_id) {
+                                            const newActiveCalendars = new Set<CalendarListed>(activeCalendars);
+                                            (e.target.checked) ? newActiveCalendars.add(testC) : newActiveCalendars.delete(testC);
+                                            setActiveCalendars(newActiveCalendars);
+                                        }
                                     }
-                                }
-                            }}/>
-                            {c.name}
-                        </label>
+                                }}/>
+                                {c.name}
+                            </label>
+                        </div>
                     ))}
                     <div className = "leftNavDiv" style = {{marginTop: "10px"}}>
                         <button onClick = {() => setShowCreateC(userID)}>Create calendar</button>
@@ -108,26 +110,20 @@ const Calendars = ({base, userID} : {base: string, userID: number}) => {
                 <CalendarComp base = {base} calendars = {activeCalendars} setCalendars = {setActiveCalendars} 
                 allCalendars = {listOfCalendars} setAllCalendars = {setListOfCalendars}/>
             </div>
-            {showCreateE && createPortal(<div>
-                    <CreateEvent calendar_id = {showCreateE} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+            {showCreateE && createPortal(
+                <div>
+                    <CreateEvent calendar_id = {showCreateE} setCalID = {setShowCreateE} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
                     allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateE(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
-            {showCreateC && createPortal(<div>
-                    <CreateCalendar user_id = {showCreateC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+            {showCreateC && createPortal(
+                <div>
+                    <CreateCalendar user_id = {showCreateC} setUserID = {setShowCreateC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
                     allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowCreateC(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
-            {showEditC && createPortal(<div>
-                    <EditCalendar calendar_info = {showEditC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
+            {showEditC && createPortal(
+                <div>
+                    <EditCalendar calendar_info = {showEditC} setCal = {setShowEditC} base = {base} calendarL = {activeCalendars} setCalendarL = {setActiveCalendars}
                     allCalendarL = {listOfCalendars} setAllCalendarL = {setListOfCalendars}/>
-                    <button style = {{position: "fixed", top: "0", right: "0", fontSize: "20px", height: "40px", 
-                    width: "40px", backgroundColor: "transparent", border: "2px #ffffff solid", color: "#ffffff", 
-                    boxShadow: "none", zIndex: 5}} onClick = {() => {setShowEditC(undefined); document.body.style.overflow = "unset"}}>X</button>
                 </div>, document.body)}
         </div>
     )

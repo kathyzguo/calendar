@@ -2,7 +2,8 @@ import {useEffect, useState} from "react"
 import type {CalendarListed, CalendarCreate} from "../../interfaces/CalendarInterface"
 import {makeNewCalendar} from "./CalendarAPI"
 
-const CreateCalendar = ({user_id, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: {user_id: number | undefined, base: string, 
+const CreateCalendar = ({user_id, setUserID, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: 
+    {user_id: number | undefined, setUserID: (c: number | undefined) => void, base: string, 
     calendarL: Set<CalendarListed>, setCalendarL: (c: Set<CalendarListed>) => void,
     allCalendarL: Set<CalendarListed>, setAllCalendarL: (c: Set<CalendarListed>) => void}) => {
     const [errorTogether, setErrorTogether] = useState("");
@@ -18,6 +19,17 @@ const CreateCalendar = ({user_id, base, calendarL, setCalendarL, allCalendarL, s
     useEffect(() => {
         if (user_id) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "unset";
+    }, [])
+
+    useEffect(() => {
+        const keyEscHandle = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setUserID(undefined);
+                document.body.style.overflow = "unset"
+            }
+        };
+        document.addEventListener("keydown", keyEscHandle)
+        return () => document.removeEventListener("keydown", keyEscHandle);
     }, [])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +57,8 @@ const CreateCalendar = ({user_id, base, calendarL, setCalendarL, allCalendarL, s
 
     return (
         user_id &&
-        <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", position: "fixed", top: "0", right: "0", left: "0", bottom: "0",
-            zIndex: "4", justifyContent: "center", alignItems: "center", backgroundColor: "#00000097", border: "0"}}>
-            <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white", position: "relative",
-                maxHeight: "650px", overflow: "scroll"}}>
+        <div className = "popupDiv">
+            <div className = "border border-5 rounded-3 popupContainer">
                 <h2>Create Calendar</h2>
                 {success !== "" && <p style = {{color: "#4400FF"}}>{success}</p>}
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
@@ -63,7 +73,7 @@ const CreateCalendar = ({user_id, base, calendarL, setCalendarL, allCalendarL, s
                         <input name = "description" type = "text" className = "form-control" id = "calendarDesc" 
                         value = {createCal.description} onChange = {handleInputChange}/>
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 <hr/>
             </div>

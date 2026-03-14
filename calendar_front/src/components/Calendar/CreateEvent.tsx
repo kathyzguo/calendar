@@ -2,7 +2,8 @@ import {useEffect, useState} from "react"
 import type {CalendarListed, Event, EventCreateS} from "../../interfaces/CalendarInterface"
 import {makeNewEvent} from "./CalendarAPI"
 
-const EditEvent = ({calendar_id, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: {calendar_id: number | undefined, base: string, 
+const EditEvent = ({calendar_id, setCalID, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: 
+    {calendar_id: number | undefined, setCalID: (c: number | undefined) => void, base: string, 
     calendarL: Set<CalendarListed>, setCalendarL: (c: Set<CalendarListed>) => void,
     allCalendarL: Set<CalendarListed>, setAllCalendarL: (c: Set<CalendarListed>) => void}) => {
     const [recurring, setRecurring] = useState(false);
@@ -59,6 +60,17 @@ const EditEvent = ({calendar_id, base, calendarL, setCalendarL, allCalendarL, se
     useEffect(() => {
         if (calendar_id) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "unset";
+    }, [])
+
+    useEffect(() => {
+        const keyEscHandle = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setCalID(undefined);
+                document.body.style.overflow = "unset"
+            }
+        };
+        document.addEventListener("keydown", keyEscHandle)
+        return () => document.removeEventListener("keydown", keyEscHandle);
     }, [])
 
     const checkTimeInput = (value: string, type: string): string => {
@@ -175,10 +187,8 @@ const EditEvent = ({calendar_id, base, calendarL, setCalendarL, allCalendarL, se
 
     return (
         calendar_id &&
-        <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", position: "fixed", top: "0", right: "0", left: "0", bottom: "0",
-            zIndex: "4", justifyContent: "center", alignItems: "center", backgroundColor: "#00000097", border: "0"}}>
-            <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white", position: "relative",
-                maxHeight: "650px", overflow: "scroll"}}>
+        <div className = "popupDiv">
+            <div className = "border border-5 rounded-3 popupContainer">
                 <h2>Create Event</h2>
                 {success !== "" && <p style = {{color: "#4400FF"}}>{success}</p>}
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>

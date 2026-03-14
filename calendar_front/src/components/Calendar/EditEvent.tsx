@@ -2,7 +2,8 @@ import {useEffect, useState} from "react"
 import type {CalendarListed, Event, EventCreateS} from "../../interfaces/CalendarInterface"
 import {editEvent, deleteEvent} from "./CalendarAPI"
 
-const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: {event: Event | undefined, base: string, 
+const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL, setAllCalendarL}: 
+    {event: Event | undefined, setEvent: (c : Event | undefined) => void, base: string, 
     calendarL: Set<CalendarListed>, setCalendarL: (c: Set<CalendarListed>) => void,
     allCalendarL: Set<CalendarListed>, setAllCalendarL: (c: Set<CalendarListed>) => void}) => {
     const [showEdit, setShowEdit] = useState(false);
@@ -69,6 +70,17 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
     useEffect(() => {
         if (event) document.body.style.overflow = "hidden";
         else document.body.style.overflow = "unset";
+    }, [])
+
+    useEffect(() => {
+        const keyEscHandle = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setEvent(undefined);
+                document.body.style.overflow = "unset"
+            }
+        };
+        document.addEventListener("keydown", keyEscHandle)
+        return () => document.removeEventListener("keydown", keyEscHandle);
     }, [])
 
     const checkTimeInput = (value: string, type: string): string => {
@@ -196,10 +208,8 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
 
     return (
         event &&
-        <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", position: "fixed", top: "0", right: "0", left: "0", bottom: "0",
-            zIndex: "4", justifyContent: "center", alignItems: "center", backgroundColor: "#00000097", border: "0"}}>
-            <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white", position: "relative",
-                maxHeight: "650px", overflow: "scroll"}}>
+        <div className = "popupDiv">
+            <div className = "border border-5 rounded-3 popupContainer">
                 <h2>Event Info</h2>
                 <h4>{event.name}</h4>
                 <p>{event.description}</p>
@@ -222,43 +232,37 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
                         <input name = "description" type = "text" className = "form-control" id = "eventDesc" 
                         value = {editedEvent.description} onChange = {handleInputChange}/>
                     </div>
+                    {!allDay &&
                     <div className = "mb-3">
-                        <fieldset>
-                            <legend>Start time</legend>
-                            {!allDay &&
-                            <div>
-                                <label htmlFor = "eventSTime" className = "form-label">Time</label>
-                                <input type = "text" className = "form-control" id = "eventSTime" onChange = {handleInputChange}
-                                name = "start_time" maxLength = {5} value = {editedEvent.start_time}/>
-                            </div>}
-                            <label htmlFor = "eventSDate" className = "form-label">Date</label>
-                            <input type = "text" className = "form-control" id = "eventSDate" onChange = {handleInputChange}
-                            name = "start_date" maxLength = {10} value = {editedEvent.start_date}/>
-                        </fieldset>
+                        <label htmlFor = "eventSTime" className = "form-label">Start time</label>
+                        <input type = "text" className = "form-control" id = "eventSTime" onChange = {handleInputChange}
+                        name = "start_time" maxLength = {5} value = {editedEvent.start_time}/>
+                    </div>}
+                    <div className = "mb-3">
+                        <label htmlFor = "eventSDate" className = "form-label">Start date</label>
+                        <input type = "text" className = "form-control" id = "eventSDate" onChange = {handleInputChange}
+                        name = "start_date" maxLength = {10} value = {editedEvent.start_date}/>
                     </div>
                     {!allDay &&
                     <div className = "mb-3">
-                        <fieldset>
-                            <legend>End time</legend>
-                            <label htmlFor = "eventETime" className = "form-label">Time</label>
-                            <input type = "text" className = "form-control" id = "eventETime" onChange = {handleInputChange}
-                            name = "end_time" maxLength = {5} value = {(editedEvent.end_time) ? editedEvent.end_time : ""}/>
-                            <label htmlFor = "eventEDate" className = "form-label">Date</label>
-                            <input type = "text" className = "form-control" id = "eventEDate" onChange = {handleInputChange}
-                            name = "end_date" maxLength = {10} value = {(editedEvent.end_date) ? editedEvent.end_date : ""}/>
-                        </fieldset>
+                        <label htmlFor = "eventETime" className = "form-label">End time</label>
+                        <input type = "text" className = "form-control" id = "eventETime" onChange = {handleInputChange}
+                        name = "end_time" maxLength = {5} value = {(editedEvent.end_time) ? editedEvent.end_time : ""}/>
+                        <label htmlFor = "eventEDate" className = "form-label">End date</label>
+                        <input type = "text" className = "form-control" id = "eventEDate" onChange = {handleInputChange}
+                        name = "end_date" maxLength = {10} value = {(editedEvent.end_date) ? editedEvent.end_date : ""}/>
                     </div>
                     }
                     <div className = "mb-3">
                         <div className = "form-check">
-                            <input name = "all_day" type = "checkbox" className = "form-check-input" id = "allDayCheck" 
+                            <input name = "all_day" type = "checkbox" className = "form-check-input purpCheck" id = "allDayCheck" 
                             checked = {allDay} onChange = {handleDayChange}/>
                             <label className = "form-check-label" htmlFor = "allDayCheck">All day</label>
                         </div>
                     </div>
                     <div className = "mb-3">
                         <div className = "form-check">
-                            <input name = "recurrence" type = "checkbox" className = "form-check-input" id = "recurrence" 
+                            <input name = "recurrence" type = "checkbox" className = "form-check-input purpCheck" id = "recurrence" 
                             checked = {recurring} onChange = {handleRecurChange}/>
                             <label className = "form-check-label" htmlFor = "recurrence">Recurring</label>
                         </div>
@@ -266,13 +270,13 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
                     {recurring &&
                     <div>
                         <div>
-                            <input type = "radio" name = "recurrence" id = "recurDay" value = "DAILY" 
+                            <input type = "radio" name = "recurrence" id = "recurDay" value = "DAILY" className = "purpCheck"
                             style = {{margin: "5px"}} onChange = {handleRecurType} checked = {editedEvent.recurrence === "DAILY"}/>
                             <label htmlFor = "recurDay" style = {{paddingRight: "5px"}}>Daily</label>
-                            <input type = "radio" name = "recurrence" id = "recurWeek" value = "WEEKLY" 
+                            <input type = "radio" name = "recurrence" id = "recurWeek" value = "WEEKLY" className = "purpCheck"
                             style = {{margin: "5px"}} onChange = {handleRecurType} checked = {editedEvent.recurrence === "WEEKLY"}/>
                             <label htmlFor = "recurWeek" style = {{paddingRight: "5px"}}>Weekly</label>
-                            <input type = "radio" name = "recurrence" id = "recurMonth" value = "MONTHLY" 
+                            <input type = "radio" name = "recurrence" id = "recurMonth" value = "MONTHLY" className = "purpCheck"
                             style = {{margin: "5px"}} onChange = {handleRecurType} checked = {editedEvent.recurrence === "MONTHLY"}/>
                             <label htmlFor = "recurMonth">Monthly</label>
                         </div>
@@ -286,7 +290,7 @@ const EditEvent = ({event, base, calendarL, setCalendarL, allCalendarL, setAllCa
                         </div>
                     </div>
                     }
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 }
                 <hr/>

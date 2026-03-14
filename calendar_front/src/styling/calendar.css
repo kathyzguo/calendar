@@ -3,7 +3,7 @@
     position: relative;
     width: 90%;
     clear: both;
-    border-image: linear-gradient(#ffa2ff, #ff00ff) 1;
+    border-image: linear-gradient(#7409E1, #9606E0) 1;
     border-width: 7px;
     border-style: ridge;
     margin: 33px;
@@ -13,25 +13,30 @@
     grid-template-rows: 6fr 3fr repeat(5, 12fr);
 }
 
-.calendarFrame > h2 {
+.topHeaderCal {
     box-sizing: border-box;
-    border-bottom: solid 4px #ffa8ff;
+    border-bottom: solid 4px #af64fb;
     grid-column: 1 / span 7;
-    background-color: #ffbeff;
-    margin: 0;
-    padding: 0;
-    font-size: 3vw;
+    background-color: #c084fc;
     display: flex;
-    color: #ffffff;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.topHeaderCal > h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 3.5vw;
+    color: #ffffff;
 }
 
 #calLeftArrow {
     position: absolute;
     top: 0;
-    left: 1.5vw;
-    height: 5vw;
+    bottom: 0;
+    left: 2vw;
+    height: 100%;
     aspect-ratio: 1;
     cursor: pointer;
 }
@@ -39,16 +44,17 @@
 #calRightArrow {
     position: absolute;
     top: 0;
+    bottom: 0;
     right: 1.5vw;
-    height: 5vw;
+    height: 100%;
     aspect-ratio: 1;
     cursor: pointer;
 }
 
 .calendarFrame > h3 {
     box-sizing: border-box;
-    background-color: #fc9dfc;
-    border-bottom: solid 4px #ff94ff;
+    background-color: #b478f0;
+    border-bottom: solid 4px #9d48f2;
     margin: 0;
     padding: 0;
     font-size: 1.2vw;
@@ -58,19 +64,20 @@
     justify-content: center;
 }
 
-.calendarFrame > div {
-    border-top: dashed #ffd5fb 3px;
-    border-left: dashed #ffd5fb 3px;
+.dateFrame {
+    border-top: dashed #c489ff 3px;
+    border-left: dashed #c489ff 3px;
+    background-color: #ffffff;
     overflow: auto;
     content: "";
 }
 
-.calendarFrame > div > h4 {
+.dateFrame > h4 {
     font-size: 1.2vw;
     font-weight: normal;
     margin: 0;
     padding: 0.6vw;
-    color:#a281f0;
+    color:#520CE2;
     display: flex;
     position: sticky;
     top: 0;
@@ -78,7 +85,7 @@
     background-color: #ffffff;
 }
 
-.calendarFrame > div > button {
+.dateFrame > button {
     width: 80%;
     font-size: 0.85vw;
     margin: 0.8vw;
@@ -87,8 +94,8 @@
     color: #ffffff;
     border-radius: 0.1vw;
     border: 0px;
-    background-color: #a281f0;
-    box-shadow: 0.3vw 0.3vw 0 #885af4, -0.3vw -0.3vw 0 #c7b0fe;;
+    background-color: #a67ef7;
+    box-shadow: 0.3vw 0.3vw 0 #814ceb, -0.3vw -0.3vw 0 #c6aafd;;
     display: flex;
     justify-content: center;
 }

@@ -13,20 +13,43 @@
     width: 100%;
     padding: 7px 10px;
     margin-bottom: 5px;
-    font-size: 22px;
+    margin-left: 10px;
+    font-size: 28px;
     color: #ffffff
 }
 
-.leftnav > label {
-    width: 100%;
+.leftNavChange {
+    width: calc(100% - 20px);
+    border-radius: 10px;
+    margin: 6px 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.leftNavChange::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to bottom, #611CEF, #3D06AF);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in;
+    z-index: 0;
+}
+
+.leftNavChange > label {
+    position: relative;
     padding: 5px 10px;
-    font-size: 18px;
-    color: #ffffff
+    font-size: 20px;
+    color: #e6e1ff;
+    z-index: 1;
 }
 
-.leftnav > label > input {
-    transform: scale(1.3);
-    margin: 8px;
+.leftNavChange > label > input {
+    display: none;
+}
+
+.leftNavChange:has(input:checked)::before {
+    transform: translateX(0);
 }
 
 .leftNavDiv {
@@ -41,13 +64,13 @@
     border: 0px;
     border-radius: 5px;
     padding: 5px;
-    background-color: #a557ff;
+    background-color: #520CE2;
     font-size: 16px;
     color: #ffffff;
 }
 
 .leftNavDiv > button:hover {
-    background-color: #772ccd;
+    background-color: #31058A;
 }
 
 .overflow {
