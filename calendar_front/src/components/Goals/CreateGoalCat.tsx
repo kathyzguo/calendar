@@ -68,7 +68,7 @@ const CreateGoalCat = ({user_id, setUserID, base, goalL, setGoalL, allGoalL, set
                         <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
                         value = {createGC.description} onChange = {handleInputChange}/>
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 <hr/>
             </div>

@@ -1,11 +1,13 @@
 .goalTitle {
-    width: 90%;
+    width: 100%;
+    margin: -10px 20px;
 }
 
 .goalTitle > h1 {
     font-size: 34px;
-    padding: 10px;
+    padding: 20px 0px;
     margin-bottom: 0px;
+    color: #ffffff;
 }
 
 .parentGoal {
@@ -20,11 +22,14 @@
 }
 
 .goalBlock {
-    width: 90%;
-    border: #0086c9 solid 7px;
-    border-radius: 7px;
-    background-color: #0aa3f0;
+    width: 100%;
+    border-image: linear-gradient(to bottom, #7409E1, #5805AD) 1;
+    border-style: solid;
+    border-width: 7px;
+    background-image: linear-gradient(to bottom, #af64fb, #9d48f2);
     padding: 5px 10px;
+    margin: 0px 20px;
+    position: relative;
 }
 
 .goalBlock > h3 {
@@ -36,4 +41,55 @@
 .goalBlock > label {
     font-size: 20px;
     color: #ffffff;
+}
+
+.goalCheck {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2em;
+    height: 2em;
+    display: none;
+}
+
+.goalCheckReal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 13px;
+    height: calc(100% - 26px);
+    aspect-ratio: 1;
+    background-color: #c387ff;
+    border: solid #b56bff 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.goalCheckReal > img {
+    width: 100%;
+    height: 100%;
+    margin: 10px;
+}
+
+.goalBlockCompleted {
+    border-image: linear-gradient(to bottom, #3E06AFbb, #30058Abb) 1;
+    background-image: linear-gradient(to bottom, #6832d4bb, #4f18bdbb);
+}
+
+.goalBlockCompleted > h3 {
+    color: #ffffffbb;
+}
+
+.goalBlockCompleted > label {
+    color: #ffffffbb;
+}
+
+.goalCheckCompleted {
+    background-color: #8151e280;
+    border: solid #703bdb30 5px;
+    background-clip: padding-box; 
 }

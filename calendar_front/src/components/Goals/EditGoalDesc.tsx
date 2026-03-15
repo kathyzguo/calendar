@@ -78,10 +78,10 @@ const EditGoalDesc = ({goalDesc, setGoalDesc, base, goalL, setGoalL, allGoalL, s
                         <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
                         value = {goalSet.description} onChange = {handleInputChange}/>
                     </div>
-                    <button style = {{marginRight: "12px"}} type = "submit" className = "btn btn-primary">Submit</button>
+                    <button style = {{marginRight: "12px"}} type = "submit" className = "btn btn-primary purpBack">Submit</button>
+                    <button style = {{marginRight: "12px"}} type = "button" className = "btn btn-primary purpBack" 
+                    onClick = {() => handleDelete()}>Delete Goal</button>
                 </form>
-                <br/>
-                <button style = {{marginRight: "12px"}} className = "btn btn-primary" onClick = {() => handleDelete()}>Delete Goal</button>
                 <hr/>
             </div>
         </div>

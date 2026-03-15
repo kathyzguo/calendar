@@ -68,7 +68,7 @@ const CreateGoalDesc = ({goal_id, setGoalID, base, goalL, setGoalL, allGoalL, se
                         <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
                         value = {createGD.description} onChange = {handleInputChange}/>
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 <hr/>
             </div>

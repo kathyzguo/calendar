@@ -214,8 +214,8 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                 <h4>{event.name}</h4>
                 <p>{event.description}</p>
                 <br/>
-                <button className = "btn btn-primary" style = {{marginRight: "12px"}} onClick = {() => setShowEdit(true)}>Edit Event</button>
-                <button className = "btn btn-primary" onClick = {() => handleDelete(event.calendar_id, event.event_id, base, allCalendarL)}>Delete Event</button>
+                <button className = "btn btn-primary purpBack" style = {{marginRight: "12px"}} onClick = {() => setShowEdit(true)}>Edit Event</button>
+                <button className = "btn btn-primary purpBack" onClick = {() => handleDelete(event.calendar_id, event.event_id, base, allCalendarL)}>Delete Event</button>
                 {success !== "" && <p style = {{color: "#4400FF"}}>{success}</p>}
                 {showEdit && 
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
@@ -244,13 +244,17 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                         name = "start_date" maxLength = {10} value = {editedEvent.start_date}/>
                     </div>
                     {!allDay &&
-                    <div className = "mb-3">
-                        <label htmlFor = "eventETime" className = "form-label">End time</label>
-                        <input type = "text" className = "form-control" id = "eventETime" onChange = {handleInputChange}
-                        name = "end_time" maxLength = {5} value = {(editedEvent.end_time) ? editedEvent.end_time : ""}/>
-                        <label htmlFor = "eventEDate" className = "form-label">End date</label>
-                        <input type = "text" className = "form-control" id = "eventEDate" onChange = {handleInputChange}
-                        name = "end_date" maxLength = {10} value = {(editedEvent.end_date) ? editedEvent.end_date : ""}/>
+                    <div>
+                        <div className = "mb-3">
+                            <label htmlFor = "eventETime" className = "form-label">End time</label>
+                            <input type = "text" className = "form-control" id = "eventETime" onChange = {handleInputChange}
+                            name = "end_time" maxLength = {5} value = {(editedEvent.end_time) ? editedEvent.end_time : ""}/>
+                        </div>
+                        <div className = "mb-3">
+                            <label htmlFor = "eventEDate" className = "form-label">End date</label>
+                            <input type = "text" className = "form-control" id = "eventEDate" onChange = {handleInputChange}
+                            name = "end_date" maxLength = {10} value = {(editedEvent.end_date) ? editedEvent.end_date : ""}/>
+                        </div>
                     </div>
                     }
                     <div className = "mb-3">
@@ -269,7 +273,7 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                     </div>
                     {recurring &&
                     <div>
-                        <div>
+                        <div style = {{marginBottom: "8px"}}>
                             <input type = "radio" name = "recurrence" id = "recurDay" value = "DAILY" className = "purpCheck"
                             style = {{margin: "5px"}} onChange = {handleRecurType} checked = {editedEvent.recurrence === "DAILY"}/>
                             <label htmlFor = "recurDay" style = {{paddingRight: "5px"}}>Daily</label>
@@ -281,12 +285,9 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                             <label htmlFor = "recurMonth">Monthly</label>
                         </div>
                         <div className = "mb-3">
-                            <fieldset>
-                                <legend>Recurrence End time</legend>
-                                <label htmlFor = "eventREDate" className = "form-label">Date</label>
-                                <input type = "text" className = "form-control" id = "eventREDate" onChange = {handleInputChange}
-                                name = "re_date" maxLength = {10} value = {(editedEvent.re_date) ? editedEvent.re_date : ""}/>
-                            </fieldset>
+                            <label htmlFor = "eventREDate" className = "form-label">Recurrence end date</label>
+                            <input type = "text" className = "form-control" id = "eventREDate" onChange = {handleInputChange}
+                            name = "re_date" maxLength = {10} value = {(editedEvent.re_date) ? editedEvent.re_date : ""}/>
                         </div>
                     </div>
                     }

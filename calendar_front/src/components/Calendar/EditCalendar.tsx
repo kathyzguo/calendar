@@ -73,7 +73,7 @@ const CreateCalendar = ({calendar_info, setCal, base, calendarL, setCalendarL, a
                         <input name = "description" type = "text" className = "form-control" id = "calendarDesc" 
                         value = {createCal.description} onChange = {handleInputChange}/>
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 <hr/>
             </div>

@@ -67,7 +67,7 @@ const EditGoalCat = ({goal_info, setGoalCat, base, goalL, setGoalL, allGoalL, se
                         <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
                         value = {goalSet.description} onChange = {handleInputChange}/>
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Submit</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Submit</button>
                 </form>
                 <hr/>
             </div>
