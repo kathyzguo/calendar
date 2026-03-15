@@ -131,7 +131,7 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                     <div className = "goalTitle">
                         <h1>Completed Goals:</h1>
                     </div>
-                    {Array.from(activeGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
+                    {Array.from(activeGoalCats).sort((a, b) => b.goal_id - a.goal_id).map(c => (Array.from(c.goals).map(desc => 
                         (desc.completed &&
                         <div className = "goalBlock goalBlockCompleted" key = {c.goal_id + "keyGoal" + desc.id}>
                             <h3 onClick = {(e) => {setShowEditD(desc)}}>{desc.name}</h3>

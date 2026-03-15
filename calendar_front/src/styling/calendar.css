@@ -103,3 +103,19 @@
 .calendarFrame ::-webkit-scrollbar {
     display: none;
 }
+
+.dateFrame > button {
+    animation: bounceIn 0.5s linear;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
