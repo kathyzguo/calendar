@@ -18,6 +18,11 @@ const Taskbar = (({type} : {type: number}) => {
                     <Link to = "/goals">Goals</Link>
                 </button>
             </div>
+            <div>
+                <button className = {`taskButton ${type === 5 ? "activeTaskButton" : ""}`}>
+                    <Link to = "/settings">Settings</Link>
+                </button>
+            </div>
         </nav>
     )
 });

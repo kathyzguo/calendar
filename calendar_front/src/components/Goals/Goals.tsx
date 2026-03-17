@@ -1,4 +1,4 @@
-import type {GoalListed, GoalCat, GoalCatCreate, GoalDesc, GoalDescCreate} from "../../interfaces/GoalInterface.tsx"
+import type {GoalListed, GoalCat, GoalDesc} from "../../interfaces/GoalInterface.tsx"
 import {loadGoalCats, deleteGoalCat, editGoalDesc} from "./GoalsAPI"
 import {createPortal} from "react-dom"
 import {useRef, useEffect, useState} from "react"

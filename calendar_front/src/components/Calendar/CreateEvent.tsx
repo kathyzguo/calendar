@@ -197,35 +197,35 @@ const EditEvent = ({calendar_id, setCalID, base, calendarL, setCalendarL, allCal
                     {errorTogether !== "" && <p className = "text-danger">{errorTogether}</p>}
                     <div className = "mb-3">
                         <label htmlFor = "eventName" className = "form-label">Event name</label>
-                        <input name = "name" type = "text" className = "form-control" id = "eventName" 
+                        <input name = "name" type = "text" className = "form-control purpText" id = "eventName" 
                         value = {editedEvent.name} onChange = {handleInputChange}/>
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "eventDesc" className = "form-label">Event description</label>
-                        <input name = "description" type = "text" className = "form-control" id = "eventDesc" 
+                        <input name = "description" type = "text" className = "form-control purpText" id = "eventDesc" 
                         value = {editedEvent.description} onChange = {handleInputChange}/>
                     </div>
                     {!allDay &&
                     <div className = "mb-3">
                         <label htmlFor = "eventSTime" className = "form-label">Start time</label>
-                        <input type = "text" className = "form-control" id = "eventSTime" onChange = {handleInputChange}
+                        <input type = "text" className = "form-control purpText" id = "eventSTime" onChange = {handleInputChange}
                         name = "start_time" maxLength = {5} value = {editedEvent.start_time}/>
                     </div>}
                     <div className = "mb-3">
                         <label htmlFor = "eventSDate" className = "form-label">Start date</label>
-                        <input type = "text" className = "form-control" id = "eventSDate" onChange = {handleInputChange}
+                        <input type = "text" className = "form-control purpText" id = "eventSDate" onChange = {handleInputChange}
                         name = "start_date" maxLength = {10} value = {editedEvent.start_date}/>
                     </div>
                     {!allDay &&
                     <div>
                         <div className = "mb-3">
                             <label htmlFor = "eventETime" className = "form-label">End time</label>
-                            <input type = "text" className = "form-control" id = "eventETime" onChange = {handleInputChange}
+                            <input type = "text" className = "form-control purpText" id = "eventETime" onChange = {handleInputChange}
                             name = "end_time" maxLength = {5} value = {(editedEvent.end_time) ? editedEvent.end_time : ""}/>
                         </div>
                         <div className = "mb-3">
                             <label htmlFor = "eventEDate" className = "form-label">End date</label>
-                            <input type = "text" className = "form-control" id = "eventEDate" onChange = {handleInputChange}
+                            <input type = "text" className = "form-control purpText" id = "eventEDate" onChange = {handleInputChange}
                             name = "end_date" maxLength = {10} value = {(editedEvent.end_date) ? editedEvent.end_date : ""}/>
                         </div>
                     </div>
@@ -259,7 +259,7 @@ const EditEvent = ({calendar_id, setCalID, base, calendarL, setCalendarL, allCal
                         </div>
                         <div className = "mb-3">
                             <label htmlFor = "eventREDate" className = "form-label">Recurrence end date</label>
-                            <input type = "text" className = "form-control" id = "eventREDate" onChange = {handleInputChange}
+                            <input type = "text" className = "form-control purpText" id = "eventREDate" onChange = {handleInputChange}
                             name = "re_date" maxLength = {10} value = {(editedEvent.re_date) ? editedEvent.re_date : ""}/>
                         </div>
                     </div>

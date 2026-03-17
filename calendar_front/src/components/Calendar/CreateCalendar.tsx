@@ -65,12 +65,12 @@ const CreateCalendar = ({user_id, setUserID, base, calendarL, setCalendarL, allC
                     {errorTogether !== "" && <p className = "text-danger">{errorTogether}</p>}
                     <div className = "mb-3">
                         <label htmlFor = "calendarName" className = "form-label">Calendar name</label>
-                        <input name = "name" type = "text" className = "form-control" id = "calendarName" 
+                        <input name = "name" type = "text" className = "form-control purpText" id = "calendarName" 
                         value = {createCal.name} onChange = {handleInputChange}/>
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "calendarDesc" className = "form-label">Calendar description</label>
-                        <input name = "description" type = "text" className = "form-control" id = "calendarDesc" 
+                        <input name = "description" type = "text" className = "form-control purpText" id = "calendarDesc" 
                         value = {createCal.description} onChange = {handleInputChange}/>
                     </div>
                     <button type = "submit" className = "btn btn-primary purpBack">Submit</button>

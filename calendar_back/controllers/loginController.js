@@ -36,4 +36,20 @@ async function addUser(nm, em, pw) {
     }
 }
 
-module.exports = {checkUsers, addUser}
+async function editUser(id, nm, em, pw) {
+    try {
+        const hashed = await bcrypt.hash(pw, 10);
+        if (pw === "") {
+            const user = await pool.query(`UPDATE users SET name = $1, email = $2 WHERE id = $3`, [nm, em, id]);
+        }
+        else {
+            const user = await pool.query(`UPDATE users SET name = $1, password = $2, email = $3 WHERE id = $4`, [nm, hashed, em, id]);
+        }
+        return {status: true, message: "User Info Successfully Edited"}
+    }
+    catch (err) {
+        console.log("Error:", err);
+    }
+}
+
+module.exports = {checkUsers, addUser, editUser}

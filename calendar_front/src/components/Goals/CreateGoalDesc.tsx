@@ -60,12 +60,12 @@ const CreateGoalDesc = ({goal_id, setGoalID, base, goalL, setGoalL, allGoalL, se
                     {errorTogether !== "" && <p className = "text-danger">{errorTogether}</p>}
                     <div className = "mb-3">
                         <label htmlFor = "goalName" className = "form-label">Goal name</label>
-                        <input name = "name" type = "text" className = "form-control" id = "goalName" 
+                        <input name = "name" type = "text" className = "form-control purpText" id = "goalName" 
                         value = {createGD.name} onChange = {handleInputChange}/>
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "goalDesc" className = "form-label">Goal description</label>
-                        <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
+                        <input name = "description" type = "text" className = "form-control purpText" id = "goalDesc" 
                         value = {createGD.description} onChange = {handleInputChange}/>
                     </div>
                     <button type = "submit" className = "btn btn-primary purpBack">Submit</button>

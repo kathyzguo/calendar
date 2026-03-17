@@ -6,6 +6,7 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
     const [formData, setFormData] = useState<LoginData>({email: "", password: "", stay: false});
     const [formErrors, setFormErrors] = useState<LoginErrors>({});
     const [success, setSuccess] = useState("");
+    const [showPW, setShowPW] = useState(false);
     const navigate = useNavigate()
 
     const checkLoginB = (email: string, password: string) => {
@@ -39,6 +40,10 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
     const handleBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, checked} = e.target;
         setFormData(prev => ({...prev, [name]: checked}));
+    }
+
+    const handlePasswordShow = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setShowPW(!showPW);
     }
 
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,21 +101,25 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
                     <div className = "mb-3">
                         <label htmlFor = "Email" className = "form-label">Email address</label>
-                        <input name = "email" type = "email" className = "form-control" id = "Email" placeholder = "Email" onChange = {handleInputChange}/>
-                        {formErrors.email && <p className = "text-danger">{formErrors.email}</p>}
+                        <input name = "email" type = "email" className = "form-control purpText" id = "Email" placeholder = "Email" onChange = {handleInputChange}/>
+                        {formErrors.email && <p className = "text-danger" style = {{paddingTop: "4px"}}>{formErrors.email}</p>}
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "Password" className = "form-label">Password</label>
-                        <input name = "password" type = "password" className = "form-control" id = "Password" placeholder = "Password" onChange = {handleInputChange}/>
-                        {formErrors.password && <p className = "text-danger">{formErrors.password}</p>}
+                        <input name = "password" type = {showPW ? "text" : "password"} className = "form-control purpText" id = "Password" placeholder = "Password" onChange = {handleInputChange}/>
+                        {formErrors.password && <p className = "text-danger" style = {{paddingTop: "4px"}}>{formErrors.password}</p>}
                     </div>
                         <div className = "mb-3">
                             <div className = "form-check">
-                                <input name = "stay" type = "checkbox" className = "form-check-input" id = "Check" onChange = {handleBoxChange}/>
+                                <input name = "stay" type = "checkbox" className = "form-check-input purpCheck" id = "Check" onChange = {handleBoxChange}/>
                                 <label className = "form-check-label" htmlFor = "Check">Stay signed in</label>
                             </div>
+                            <div style = {{marginTop: "5px"}} className = "form-check">
+                                <input name = "showPW" type = "checkbox" className = "form-check-input purpCheck" id = "ShowPW" onChange = {handlePasswordShow}/>
+                                <label className = "form-check-label" htmlFor = "Check">Show password</label>
+                            </div>
                         </div>
-                    <button type = "submit" className = "btn btn-primary">Sign in</button>
+                    <button type = "submit" className = "btn btn-primary purpBack">Sign in</button>
                 </form>
                 <hr/>
                 <Link to = "/create">Create Account</Link>

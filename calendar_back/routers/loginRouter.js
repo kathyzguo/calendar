@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-const {addUser, checkUsers} = require("../controllers/loginController");
+const {addUser, editUser, checkUsers} = require("../controllers/loginController");
 
 router.use(express.json());
 router.use(cookieParser());
@@ -29,6 +29,12 @@ router.post("/create", async (req, res) => {
     const {name, email, password} = req.body;
     const createdUser = await addUser(name, email.toLowerCase(), password);
     res.json(createdUser);
+});
+
+router.post("/edit", async (req, res) => {
+    const {id, name, email, password} = req.body;
+    const editedUser = await editUser(id, name, email.toLowerCase(), password);
+    res.json(editedUser);
 });
 
 router.get("/authToken", (req, res) => {

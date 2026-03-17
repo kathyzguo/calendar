@@ -1,0 +1,24 @@
+.settingsCont {
+    margin: 40px;
+    width: 500px;
+    padding: 20px;
+    border: double 14px #ffffff;
+}
+
+.settingsCont > h2 {
+    color: #ffffff;
+}
+
+.whiteText {
+    border-color: #ffffff !important;
+}
+
+.whiteText:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 0.25rem rgba(242, 229, 255, 0.25) !important;
+}
+
+.errorTextNew {
+    color: #c58cff !important;
+    padding-top: 4px;
+}

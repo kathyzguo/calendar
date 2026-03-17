@@ -6,6 +6,7 @@ const CreateLogin = ({base}: {base: string}) => {
     const [formData, setFormData] = useState<LoginCreate>({name: "", email: "", password: ""});
     const [formErrors, setFormErrors] = useState<LoginCreateErrors>({});
     const [success, setSuccess] = useState("");
+    const [showPW, setShowPW] = useState(false);
 
     const checkLoginB = (name: string, email: string, password: string) => {
         const newErrors: LoginCreateErrors = {};
@@ -36,6 +37,10 @@ const CreateLogin = ({base}: {base: string}) => {
             delete newErrors[name as keyof LoginCreateErrors];
             setFormErrors(newErrors);
         }
+    }
+
+    const handlePasswordShow = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setShowPW(!showPW);
     }
 
     const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,20 +74,26 @@ const CreateLogin = ({base}: {base: string}) => {
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
                     <div className = "mb-3">
                         <label htmlFor = "Name" className = "form-label">Name</label>
-                        <input name = "name" type = "text" className = "form-control" id = "Name" placeholder = "Name" onChange = {handleInputChange}/>
-                        {formErrors.name && <p className = "text-danger">{formErrors.name}</p>}
+                        <input name = "name" type = "text" className = "form-control purpText" id = "Name" placeholder = "Name" onChange = {handleInputChange}/>
+                        {formErrors.name && <p className = "text-danger" style = {{paddingTop: "4px"}}>{formErrors.name}</p>}
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "Email" className = "form-label">Email address</label>
-                        <input name = "email" type = "email" className = "form-control" id = "Email" placeholder = "Email" onChange = {handleInputChange}/>
-                        {formErrors.email && <p className = "text-danger">{formErrors.email}</p>}
+                        <input name = "email" type = "email" className = "form-control purpText" id = "Email" placeholder = "Email" onChange = {handleInputChange}/>
+                        {formErrors.email && <p className = "text-danger" style = {{paddingTop: "4px"}}>{formErrors.email}</p>}
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "Password" className = "form-label">Password</label>
-                        <input name = "password" type = "password" className = "form-control" id = "Password" placeholder = "Password" onChange = {handleInputChange}/>
-                        {formErrors.password && <p className = "text-danger">{formErrors.password}</p>}
+                        <input name = "password" type = {showPW ? "text" : "password"} className = "form-control purpText" id = "Password" placeholder = "Password" onChange = {handleInputChange}/>
+                        {formErrors.password && <p className = "text-danger" style = {{paddingTop: "4px"}}>{formErrors.password}</p>}
                     </div>
-                    <button type = "submit" className = "btn btn-primary">Create Account</button>
+                    <div className = "mb-3">
+                        <div className = "form-check">
+                            <input name = "showPW" type = "checkbox" className = "form-check-input purpCheck" id = "ShowPW" onChange = {handlePasswordShow}/>
+                            <label className = "form-check-label" htmlFor = "Check">Show password</label>
+                        </div>
+                    </div>
+                    <button type = "submit" className = "btn btn-primary purpBack">Create Account</button>
                 </form>
                 <hr/>
                 <Link to = "/">Go back to Login</Link>

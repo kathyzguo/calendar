@@ -60,12 +60,12 @@ const CreateGoalCat = ({user_id, setUserID, base, goalL, setGoalL, allGoalL, set
                     {errorTogether !== "" && <p className = "text-danger">{errorTogether}</p>}
                     <div className = "mb-3">
                         <label htmlFor = "goalName" className = "form-label">Goal category name</label>
-                        <input name = "name" type = "text" className = "form-control" id = "goalName" 
+                        <input name = "name" type = "text" className = "form-control purpText" id = "goalName" 
                         value = {createGC.name} onChange = {handleInputChange}/>
                     </div>
                     <div className = "mb-3">
                         <label htmlFor = "goalDesc" className = "form-label">Goal category description</label>
-                        <input name = "description" type = "text" className = "form-control" id = "goalDesc" 
+                        <input name = "description" type = "text" className = "form-control purpText" id = "goalDesc" 
                         value = {createGC.description} onChange = {handleInputChange}/>
                     </div>
                     <button type = "submit" className = "btn btn-primary purpBack">Submit</button>

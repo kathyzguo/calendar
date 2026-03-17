@@ -33,6 +33,20 @@
     border-color: #5805AD;
 }
 
+.purpBack:active {
+    background-color: #881df2 !important;
+    border-color: #881df2 !important;
+}
+
+.purpBack:focus {
+    border-color: #7409E1 !important;
+    box-shadow: 0 0 0 0.25rem rgba(116, 9, 225, 0.25) !important;
+}
+
+.purpPad {
+    margin-left: 10px !important;
+}
+
 .purpCheck {
     accent-color: #7409E1 !important;
 }
@@ -43,6 +57,11 @@
 }
 
 .purpCheck:focus {
+    border-color: #7409E1 !important;
+    box-shadow: 0 0 0 0.25rem rgba(116, 9, 225, 0.25) !important;
+}
+
+.purpText:focus {
     border-color: #7409E1 !important;
     box-shadow: 0 0 0 0.25rem rgba(116, 9, 225, 0.25) !important;
 }
