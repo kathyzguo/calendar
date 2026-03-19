@@ -7,7 +7,7 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
     const [formErrors, setFormErrors] = useState<LoginErrors>({});
     const [success, setSuccess] = useState("");
     const [showPW, setShowPW] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const checkLoginB = (email: string, password: string) => {
         const newErrors: LoginErrors = {};
@@ -42,7 +42,7 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
         setFormData(prev => ({...prev, [name]: checked}));
     }
 
-    const handlePasswordShow = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordShow = () => {
         setShowPW(!showPW);
     }
 

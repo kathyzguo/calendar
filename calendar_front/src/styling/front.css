@@ -1,0 +1,128 @@
+.topTrack {
+    width: 100%;
+    height: 70px;
+    background-color: #020628;
+    display: flex;
+}
+
+.topTrackL {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.topTrackR {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.topTrackItem {
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.topTrackItem > h1 {
+    font-size: 40px;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.linkButton > button {
+    border: solid #ffffff 2px;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 21px;
+    padding: 5px 10px;
+    margin-right: 12px;
+    background-color: #ffffff00;
+    transition: background-color 0.5s ease;
+}
+
+.linkButton > button:hover {
+    background-color: #221F44
+}
+
+.linkButton > button:active {
+    background-color: #221F44
+}
+
+.frontContainer {
+    width: 100%;
+    padding-top: 25px;
+}
+
+.frontContainer > h1 {
+    color: #ffffff;
+    text-align: center;
+}
+
+.frontContainer > p {
+    font-size: 20px;
+    color: #ffffff;
+    padding: 10px 40px;
+}
+
+.topCt {
+    background-image: url("trackingImg.jpg");
+    background-size: cover;
+    padding: 50px;
+}
+
+.topCt > h1 {
+    font-size: 100px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.addBlock {
+    padding: 15px 0px;
+}
+
+.exUsage > h2 {
+    padding: 0px 40px;
+    color: #f0edfd;
+}
+
+.exUsage > p { 
+    color: #e6e1ff;
+    font-size: 20px;
+    padding: 0px 40px;
+}
+
+.flexPictures {
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+    column-gap: 20px;
+}
+
+.flexPictures > img {
+    border: double 7px #ffffff;
+    height: auto;
+}
+
+.flexPicturesV {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.flexPicturesV > img {
+    border: double 7px #ffffff;
+    height: auto;
+}
+
+.fadeIn {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.fadeIn.visible {
+    opacity: 1;
+}

@@ -73,7 +73,7 @@ const Settings = ({base, userID} : {base: string, userID: number}) => {
         }
     }
 
-    const handlePasswordShow = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordShow = () => {
         setShowPW(!showPW);
     }
 
@@ -96,6 +96,21 @@ const Settings = ({base, userID} : {base: string, userID: number}) => {
             catch (err) {
                 if (err instanceof Error) alert("Network Error: " + err.message);
             }
+        }
+    }
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch(`${base}/login/logout`, {
+                method: "GET",
+                credentials: "include",
+            })
+            if (response.ok) {
+                navigate("/login");
+            }
+        }
+        catch (err) {
+            if (err instanceof Error) alert("Network Error: " + err.message);
         }
     }
 
@@ -129,7 +144,7 @@ const Settings = ({base, userID} : {base: string, userID: number}) => {
                             </div>
                         </div>
                         <button type = "submit" className = "btn btn-primary purpBack">Edit Account</button>
-                        <button type = "button" className = "btn btn-primary purpBack purpPad">Logout</button>
+                        <button type = "button" className = "btn btn-primary purpBack purpPad" onClick = {() => handleLogout()}>Logout</button>
                         <button type = "button" className = "btn btn-primary purpBack purpPad" onClick = {() => setShowDel(userID)}>Delete Account</button>
                     </form>
                     <hr/>

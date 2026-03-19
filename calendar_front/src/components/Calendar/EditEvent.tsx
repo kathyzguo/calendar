@@ -263,9 +263,7 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                             checked = {allDay} onChange = {handleDayChange}/>
                             <label className = "form-check-label" htmlFor = "allDayCheck">All day</label>
                         </div>
-                    </div>
-                    <div className = "mb-3">
-                        <div className = "form-check">
+                        <div style = {{marginTop: "5px"}} className = "form-check">
                             <input name = "recurrence" type = "checkbox" className = "form-check-input purpCheck" id = "recurrence" 
                             checked = {recurring} onChange = {handleRecurChange}/>
                             <label className = "form-check-label" htmlFor = "recurrence">Recurring</label>

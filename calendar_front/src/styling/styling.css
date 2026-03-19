@@ -5,6 +5,7 @@
 @import url("./goals.css");
 @import url("./popup.css");
 @import url("./settings.css");
+@import url("./front.css");
 
 :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

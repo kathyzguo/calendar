@@ -53,4 +53,15 @@ router.get("/authToken", (req, res) => {
     }
 });
 
+router.get("/logout", (req, res) => {
+    const cookieOptions = {
+        httpOnly: true,
+        secure: (process.env.NODE_ENV === "production"),
+        sameSite: (process.env.NODE_ENV === "production" ? "none" : "lax"),
+        path: "/",
+    }
+    res.clearCookie("authToken", cookieOptions);
+    res.sendStatus(200);
+});
+
 module.exports = router;

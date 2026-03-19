@@ -39,7 +39,7 @@ const CreateLogin = ({base}: {base: string}) => {
         }
     }
 
-    const handlePasswordShow = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordShow = () => {
         setShowPW(!showPW);
     }
 
@@ -96,7 +96,7 @@ const CreateLogin = ({base}: {base: string}) => {
                     <button type = "submit" className = "btn btn-primary purpBack">Create Account</button>
                 </form>
                 <hr/>
-                <Link to = "/">Go back to Login</Link>
+                <Link to = "/login">Go back to Login</Link>
             </div>
         </div>
     </>

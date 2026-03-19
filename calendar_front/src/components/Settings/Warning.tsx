@@ -12,7 +12,6 @@ const Warning = ({base, userDID, setUserDID} : {base: string, userDID: number | 
 
     const handleDelete = async () => {
         try {
-            console.log("CHECKPOINT 1");
             const jsonObj = {id: userDID}
             const response = await fetch(`${base}/main/delete`, {
                 method: "DELETE",
@@ -20,7 +19,7 @@ const Warning = ({base, userDID, setUserDID} : {base: string, userDID: number | 
                 body: JSON.stringify(jsonObj)
             })
             if (response.ok) {
-                navigate("/");
+                navigate("/login");
             }
         }
         catch (err) {

@@ -29,8 +29,8 @@
 }
 
 .purpBack:hover {
-    background-color: #5805AD;
-    border-color: #5805AD;
+    background-color: #5805AD !important;
+    border-color: #5805AD !important;
 }
 
 .purpBack:active {

@@ -6,13 +6,15 @@ import MainPage from './Home/MainPage.tsx'
 import Calendars from './Calendar/Calendars.tsx'
 import Goals from './Goals/Goals.tsx'
 import Settings from './Settings/Settings.tsx'
+import Front from "./Home/Front.tsx"
 
 function App({apiBase}: {apiBase: string}) {
     const [userID, setUserID] = useState<number>(-1)
     return (
     <BrowserRouter>
         <Routes>
-            <Route path = "/" element = {<LoginInputs base = {apiBase} setID = {setUserID}/>}/>
+            <Route path = "/" element = {<Front base = {apiBase} setID = {setUserID}/>}/>
+            <Route path = "/login" element = {<LoginInputs base = {apiBase} setID = {setUserID}/>}/>
             <Route path = "/create" element = {<CreateLogin base = {apiBase}/>}/>
             <Route path = "/home" element = {<MainPage base = {apiBase} userID = {userID}/>}/>
             <Route path = "/calendars" element = {<Calendars base = {apiBase} userID = {userID}/>}/>
