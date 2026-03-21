@@ -1,5 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom'
-import {useRef, useEffect} from "react"
+import {useEffect} from "react"
 
 const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) => {
     const navigate = useNavigate();

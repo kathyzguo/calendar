@@ -159,10 +159,10 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                 <h3>Thursday</h3>
                 <h3>Friday</h3>
                 <h3>Saturday</h3>
-                {Array.from({length: dayStart}, (j2, i2) => (
+                {Array.from({length: dayStart}, (_, i2) => (
                     <div className = "dateFrame"  key = {"blankDate" + i2}></div>
                 ))}
-                {Array.from({length: numOfDays}, (j2, i2) => {
+                {Array.from({length: numOfDays}, (_, i2) => {
                     const borderRight = ((i2 + dayStart + 1) % 7 == 0) ? "dashed #c489ff 3px" : "";
                     const borderBottom = ((i2 + dayStart) >= numRows - 7) ? "dashed #c489ff 3px" : "";
                     const events = determineDayWEvent(currentYear, i2 + 1, currentMonth, (dayStart + i2) % 7, activeEvents);
@@ -183,7 +183,7 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                     </div>
                     )
                 })}
-                {Array.from({length: numRows - (dayStart + numOfDays)}, (j2, i2) => {
+                {Array.from({length: numRows - (dayStart + numOfDays)}, (_, i2) => {
                     const x = dayStart + numOfDays + i2;
                     const borderRight = ((x + 1) % 7 == 0) ? "dashed #c489ff 3px" : "";
                     const borderBottom = (x > numRows - 7) ? "dashed #c489ff 3px" : "";

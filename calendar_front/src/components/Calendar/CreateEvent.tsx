@@ -124,12 +124,12 @@ const EditEvent = ({calendar_id, setCalID, base, calendarL, setCalendarL, allCal
         if (success !== "") setSuccess("");
     }
 
-    const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDayChange = (_: React.ChangeEvent<HTMLInputElement>) => {
         setEditedEvent(prev => ({...prev, all_day: !editedEvent.all_day}))
         setAllDay(!allDay);
     }
 
-    const handleRecurChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleRecurChange = (_: React.ChangeEvent<HTMLInputElement>) => {
         setRecurring(!recurring);
     }
 

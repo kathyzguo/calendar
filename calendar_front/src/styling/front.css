@@ -66,7 +66,7 @@
 }
 
 .topCt {
-    background-image: url("trackingImg.jpg");
+    background-image: url("/trackingImg.jpg");
     background-size: cover;
     padding: 50px;
 }

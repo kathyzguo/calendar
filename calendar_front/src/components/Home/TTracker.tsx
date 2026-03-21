@@ -2,7 +2,7 @@ import {useEffect} from "react"
 import {useNavigate} from 'react-router-dom'
 import Taskbar from "./Taskbar"
 
-const TTracker = ({base, userID} : {base: string, userID: number}) => {
+const TTracker = ({userID} : {base: string, userID: number}) => {
     const navigate = useNavigate();
 
     useEffect(() => {

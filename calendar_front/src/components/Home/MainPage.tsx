@@ -66,7 +66,7 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                 <div className = "mainBlock">
                     <div className = "mainBlockTitle">
                         <h2>Calendars</h2>
-                        <img src = "./calendarIcon.png"/>
+                        <img src = "/calendarIcon.png"/>
                     </div>
                     <div className = "mainBlockListing">
                         {Array.from(listOfCalendars).sort((a, b) => a.calendar_id - b.calendar_id).map(c => (
@@ -84,7 +84,7 @@ const MainPage = ({base, userID}: {base: string, userID: number}) => {
                 <div className = "mainBlock">
                     <div className = "mainBlockTitle">
                         <h2>Goals</h2>
-                        <img src = "./pencilIcon.png"/>
+                        <img src = "/pencilIcon.png"/>
                     </div>
                     <div className = "mainBlockListing">
                         {Array.from(listOfGoals).sort((a, b) => a.goal_id - b.goal_id).map(c => (

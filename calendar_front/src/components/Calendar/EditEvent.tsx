@@ -134,12 +134,12 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
         if (success !== "") setSuccess("");
     }
 
-    const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDayChange = (_: React.ChangeEvent<HTMLInputElement>) => {
         setEditedEvent(prev => ({...prev, all_day: !editedEvent.all_day}))
         setAllDay(!allDay);
     }
 
-    const handleRecurChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleRecurChange = (_: React.ChangeEvent<HTMLInputElement>) => {
         setRecurring(!recurring);
     }
 
@@ -202,6 +202,7 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
                 setCalendarL(new Set(calendarL));
                 setAllCalendarL(new Set(allCalendarL));
             }
+            setDeleted(true);
             setSuccess(responseString);
         }
     }

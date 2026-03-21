@@ -112,10 +112,10 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                     {Array.from(activeGoalCats).sort((a, b) => a.goal_id - b.goal_id).map(c => (Array.from(c.goals).map(desc => 
                         (!desc.completed &&
                         <div className = "goalBlock" key = {c.goal_id + "keyGoal" + desc.id}>
-                            <h3 onClick = {(e) => {setShowEditD(desc)}}>{desc.name}</h3>
+                            <h3 onClick = {(_) => {setShowEditD(desc)}}>{desc.name}</h3>
                             <label>
                                 {desc.description}
-                                <input type = "checkbox" className = "goalCheck" onChange = {async (e) => {
+                                <input type = "checkbox" className = "goalCheck" onChange = {async (_) => {
                                     const changeCheck = await editGoalDesc({...desc, completed: true}, base, listOfGoalCats)
                                     if (changeCheck) {
                                         const newListOfGoalCats = new Set(listOfGoalCats)
@@ -134,10 +134,10 @@ const Goals = ({base, userID} : {base: string, userID: number}) => {
                     {Array.from(activeGoalCats).sort((a, b) => b.goal_id - a.goal_id).map(c => (Array.from(c.goals).map(desc => 
                         (desc.completed &&
                         <div className = "goalBlock goalBlockCompleted" key = {c.goal_id + "keyGoal" + desc.id}>
-                            <h3 onClick = {(e) => {setShowEditD(desc)}}>{desc.name}</h3>
+                            <h3 onClick = {(_) => {setShowEditD(desc)}}>{desc.name}</h3>
                             <label>
                                 {desc.description}
-                                <input type = "checkbox" checked className = "goalCheck" onChange = {async (e) => {
+                                <input type = "checkbox" checked className = "goalCheck" onChange = {async (_) => {
                                     const changeCheck = await editGoalDesc({...desc, completed: false}, base, listOfGoalCats)
                                     if (changeCheck) {
                                         const newListOfGoalCats = new Set(listOfGoalCats)
