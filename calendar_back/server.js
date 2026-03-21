@@ -7,10 +7,11 @@ const calendarRouter = require("./routers/calendarRouter");
 const goalRouter = require("./routers/goalRouter");
 
 const server = express();
+const PORT = process.env.PORT || 8080;
 
 server.use(cors({
     origin: process.env.NODE_ENV === "production"
-        ? "https://yourapp.vercel.app" : "http://localhost:5173",
+        ? "http://localhost:5173" : "http://localhost:5173",
     credentials: true
 }));
 server.use("/api/login", loginRouter);
@@ -18,6 +19,8 @@ server.use("/api/main", mainRouter)
 server.use("/api/calendar", calendarRouter);
 server.use("/api/goal", goalRouter)
 
-server.listen(3000, () => {
-    console.log("Server started!");
+server.get("/", (req, res) => {
+  res.status(200).send("OK");
 });
+
+server.listen(PORT);

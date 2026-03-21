@@ -5,6 +5,6 @@ import './styling/styling.css'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <App apiBase = {"http://localhost:3000/api"} />
+        <App apiBase = {"http://trackie-back-dev.us-east-1.elasticbeanstalk.com/api"} />
     </StrictMode>,
 )

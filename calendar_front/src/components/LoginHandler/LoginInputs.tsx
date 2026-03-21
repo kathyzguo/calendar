@@ -123,6 +123,7 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
                 </form>
                 <hr/>
                 <Link to = "/create">Create Account</Link>
+                <Link to = "/" style = {{paddingLeft: "10px"}}>Home Page</Link>
             </div>
         </div>
     </>

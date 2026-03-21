@@ -42,7 +42,7 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
 
     return (
         <div style = {{position: "absolute", inset: "0"}}>
-            <div className = "topTrack">
+            <div className = "topTrack fadeIn">
                 <div className = "topTrackL">
                     <div className = "topTrackItem">
                         <h1>Trackie</h1>
@@ -61,7 +61,7 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
                     </div>
                 </div>
             </div>
-            <div className = "frontContainer topCt">
+            <div className = "frontContainer topCt fadeIn">
                 <h1>Track the way <br/> you want</h1>
             </div>
             <div className = "frontContainer addBlock fadeIn" style = {{backgroundColor: "#00000027"}}>
@@ -69,7 +69,7 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
                 <p>What started as a way to gain experience quickly became a full-scale web development project. 
                     I originally wanted to start a small project to learn more about full-stack development. However, 
                     the more I worked on this project, the more I realized I needed something to keep track of my commitments. 
-                    I wanted a tracking system that was more stylish and I could easily seperate my concerns into different categories. 
+                    I wanted a tracking system that was more stylish and I could easily separate my concerns into different categories. 
                     Thus I turned my small project into something that I could use to store information. 
                     I hope that this website continues to be a valuable tracker to myself and others as I continue on my CS journey!
                 </p>
@@ -78,20 +78,20 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
                 <h1>How to use</h1>
                 <div className = "exUsage fadeIn">
                     <h2>About creating and editing calendars/goals</h2>
-                    <p>Each calendar/goal is seperated into a category which can be created, edited, and deleted. 
+                    <p>Each calendar/goal is separated into a category which can be created, edited, and deleted. 
                         Most of the functionality related to this is located on the left sidebar. 
                         Clicking on create calendar will prompt the user to create a new calendar category to which events can be added. 
                         To edit a calendar, only select one calendar to be active to edit. 
                         To make an event on that calendar, do the same. 
                         You can delete multiple calendar categories at once by selecting all of the ones that want to be deleted. 
-                        To select a calendar category, simply click on the name of the category and it should be highlighted as shown. 
+                        To select a calendar category, simply click on the name of the category and it should be highlighted as shown below. 
                         The same applies to goals.
                     </p>
                 </div>
                 <div className = "exUsage fadeIn">
                     <h2 style = {{textAlign: "right"}}>Popup window display for creation and edits</h2>
                     <p style = {{textAlign: "right"}}>When creating or editing a calendar/goal, a popup window will appear. 
-                        The fields will appear filled if editing but will still require they fill specific requirements. 
+                        The fields will appear filled if editing but will still require they fulfill specific requirements. 
                         For example, filling out the date for a calendar event will require the user to use a specific format. 
                         In addition, the way to exit out of the popup is to press escape on the keyboard. 
                         There are currently no other ways to escape out of the popup window.
