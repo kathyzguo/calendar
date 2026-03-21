@@ -6,7 +6,7 @@ html, body {
     margin-top: 60px;
     margin-bottom: 20px;
     height: 150px;
-    background-image: url("citylandscape.png");
+    background-image: url("/citylandscape.png");
     background-size: auto 100%;
     background-repeat: repeat-x;
     display: flex;
