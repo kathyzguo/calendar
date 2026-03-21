@@ -96,7 +96,7 @@ const LoginInputs = ({base, setID}: {base: string, setID: (userID: number) => vo
     <>
         <div style = {{minHeight: "100vh", minWidth: "100vw", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#9A6FFF"}}>
             <div className = "border border-5 rounded-3" style = {{width: "470px", padding: "20px", backgroundColor: "white"}}>
-                <h2>Trackie</h2>
+                <h2>Traxiu</h2>
                 {success.length > 1 && <h6 style = {{color: "#4400FF"}}>{success}</h6>}
                 <form className = "px-4 py-3" noValidate onSubmit = {handleFormSubmission}>
                     <div className = "mb-3">

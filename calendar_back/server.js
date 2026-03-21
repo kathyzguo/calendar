@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8080;
 
 server.use(cors({
     origin: process.env.NODE_ENV === "production"
-        ? "https://d3dtsrmp2bd24m.cloudfront.net" : "http://localhost:5173",
+        ? "https://traxiu.com" : "http://localhost:5173",
     credentials: true
 }));
 server.use("/api/login", loginRouter);

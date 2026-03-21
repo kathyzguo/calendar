@@ -33,7 +33,7 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
                     else entry.target.classList.remove("visible");
                 });
             },
-            {threshold: 0.12}
+            {threshold: 0.10}
         );
 
         document.querySelectorAll(".fadeIn").forEach(e => observer.observe(e));
@@ -45,7 +45,7 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
             <div className = "topTrack fadeIn">
                 <div className = "topTrackL">
                     <div className = "topTrackItem">
-                        <h1>Trackie</h1>
+                        <h1>Traxiu</h1>
                     </div>
                 </div>
                 <div className = "topTrackR">
@@ -65,12 +65,13 @@ const Front = ({base, setID}: {base: string, setID: (userID: number) => void}) =
                 <h1>Track the way <br/> you want</h1>
             </div>
             <div className = "frontContainer addBlock fadeIn" style = {{backgroundColor: "#00000027"}}>
-                <h1>About Trackie</h1>
+                <h1>About Traxiu</h1>
                 <p>What started as a way to gain experience quickly became a full-scale web development project. 
                     I originally wanted to start a small project to learn more about full-stack development. However, 
                     the more I worked on this project, the more I realized I needed something to keep track of my commitments. 
                     I wanted a tracking system that was more stylish and I could easily separate my concerns into different categories. 
                     Thus I turned my small project into something that I could use to store information. 
+                    This website is mostly used for desktop and scales better with it, however it is still accessible on phone. 
                     I hope that this website continues to be a valuable tracker to myself and others as I continue on my CS journey!
                 </p>
             </div>
