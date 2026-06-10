@@ -152,7 +152,6 @@ const EditEvent = ({event, setEvent, base, calendarL, setCalendarL, allCalendarL
         e.preventDefault();
         if (editedEvent && event && !deleted) {
             if (!editedEvent.name || editedEvent.name === "") {setErrorTogether("Please enter a name"); return}
-            if (!editedEvent.description || editedEvent.description === "") {setErrorTogether("Please enter a description"); return}
             if (!editedEvent.start_date) {setErrorTogether("Please enter a start date"); return}
             else {
                 const newDateCheck = checkTimeInput(editedEvent.start_date, "DATE");

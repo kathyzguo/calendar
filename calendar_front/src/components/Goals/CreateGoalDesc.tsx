@@ -38,7 +38,6 @@ const CreateGoalDesc = ({goal_id, setGoalID, base, goalL, setGoalL, allGoalL, se
         e.preventDefault();
         if (goal_id) {
             if (createGD.name === "") {setErrorTogether("Please enter a name"); return}
-            if (createGD.description === "") {setErrorTogether("Please enter a description"); return}
             setErrorTogether("");
             const newGL = await makeNewGoalDesc(createGD, base, allGoalL);
             if (typeof newGL !== "string") {

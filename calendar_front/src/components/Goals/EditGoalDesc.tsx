@@ -38,7 +38,6 @@ const EditGoalDesc = ({goalDesc, setGoalDesc, base, goalL, setGoalL, allGoalL, s
         e.preventDefault();
         if (goalDesc && !deleted) {
             if (goalSet.name === "") {setErrorTogether("Please enter a name"); return}
-            if (goalSet.description === "") {setErrorTogether("Please enter a description"); return}
             setErrorTogether("");
             const newG = await editGoalDesc(goalSet, base, allGoalL);
             if (newG) {

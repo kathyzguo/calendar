@@ -174,7 +174,6 @@ const CalendarComp = ({base, calendars, setCalendars, allCalendars, setAllCalend
                         <button key = {"clickFor" + event.event_id} onClick = {() => setEventClicked(event)}>
                             {event.name}
                             <br/>
-                            {(event.all_day) ? "All day" : ""}
                             {(!event.all_day) ? event.start_time.toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
                             {(event.end_time && !event.all_day) ? " to " + event.end_time.toLocaleTimeString("en-US", 
                             {hour: "2-digit", minute: "2-digit", hour12: false}) : ""}
